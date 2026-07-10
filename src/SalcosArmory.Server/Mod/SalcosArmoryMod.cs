@@ -1,6 +1,8 @@
 using SalcosArmory.Compat;
 using SalcosArmory.Config;
 using SalcosArmory.Content;
+using SalcosArmory.MedicalMerge;
+using SalcosArmory.Runtime;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Utils;
@@ -12,6 +14,8 @@ public sealed class SalcosArmoryMod(
     SettingsLoader settingsLoader,
     WttContentLoader contentLoader,
     CompatService compatService,
+    RuntimeInjectionService runtimeInjectionService,
+    MedicalMergeRegistration medicalMergeRegistration,
     ISptLogger<SalcosArmoryMod> logger
 ) : IOnLoad
 {
@@ -42,6 +46,20 @@ public sealed class SalcosArmoryMod(
         {
             results.Add(ModuleResult.Skipped("Compat", "Disabled in settings."));
         }
+
+        if (settings.LoadRuntimeInjection)
+        {
+            var runtimeSettings = await settingsLoader.LoadRuntimeInjectionAsync(paths.RuntimeInjectionFile);
+            results.Add(runtimeInjectionService.Load(runtimeSettings, settings.Debug));
+        }
+        else
+        {
+            results.Add(ModuleResult.Skipped("Runtime injection", "Disabled in settings."));
+        }
+
+        results.Add(settings.LoadMedicalMerge
+            ? medicalMergeRegistration.Register()
+            : ModuleResult.Skipped("Medical merge", "Disabled in settings."));
 
         foreach (var result in results)
         {

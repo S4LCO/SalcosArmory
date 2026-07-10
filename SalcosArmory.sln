@@ -4,6 +4,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalcosArmory.Server", "src\SalcosArmory.Server\SalcosArmory.Server.csproj", "{5D61A48C-E606-491D-A1D4-1797D8061701}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalcosArmory.Client", "src\SalcosArmory.Client\SalcosArmory.Client.csproj", "{E1A59D3E-3D25-4C29-B4A6-03F1A7CF9C20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{5D61A48C-E606-491D-A1D4-1797D8061701}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D61A48C-E606-491D-A1D4-1797D8061701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D61A48C-E606-491D-A1D4-1797D8061701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A59D3E-3D25-4C29-B4A6-03F1A7CF9C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A59D3E-3D25-4C29-B4A6-03F1A7CF9C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A59D3E-3D25-4C29-B4A6-03F1A7CF9C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A59D3E-3D25-4C29-B4A6-03F1A7CF9C20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

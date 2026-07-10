@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>SalcosArmory</RootNamespace>
@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
-    <Version>0.1.2</Version>
+    <Version>0.2.0</Version>
 
     <OutputPath>bin\$(Configuration)\SalcosArmory\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -18,12 +18,13 @@
   <ItemGroup>
     <PackageReference Include="SPTarkov.Common" Version="4.0.13" />
     <PackageReference Include="SPTarkov.DI" Version="4.0.13" />
+    <PackageReference Include="SPTarkov.Reflection" Version="4.0.13" />
     <PackageReference Include="SPTarkov.Server.Core" Version="4.0.13" />
     <PackageReference Include="WTT-ServerCommonLib" Version="2.0.20" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="config\**\*">
+    <Content Include="config\**\*.json;config\**\*.jsonc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
