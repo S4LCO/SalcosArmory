@@ -41,5 +41,14 @@ public sealed record ArmoryPaths(
     }
 
     public string SettingsFile => Path.Combine(Config, "settings.json");
-    public string RuntimeInjectionFile => Path.Combine(Config, "runtime_injection.json");
+    public string RuntimeInjectionFile
+    {
+        get
+        {
+            var jsoncFile = Path.Combine(Config, "runtime_injection.jsonc");
+            return File.Exists(jsoncFile)
+                ? jsoncFile
+                : Path.Combine(Config, "runtime_injection.json");
+        }
+    }
 }
