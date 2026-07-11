@@ -1,0 +1,33 @@
+{
+  // The newest raid has full weight. Older raids are multiplied by this value for every step back.
+  "historySize": 5,
+  "minimumRaids": 3,
+  "historyDecay": 0.75,
+
+  // Eligible PMCs are affected between these two percentages, depending on measured pressure.
+  "minimumAffectedPercent": 25,
+  "maximumAffectedPercent": 35,
+  "maximumCountermeasuresPerBot": 2,
+
+  // Player behaviour thresholds used to activate individual countermeasures.
+  "heavyArmorClassThreshold": 4,
+  "nightRaidThreshold": 0.50,
+  "headshotRatioThreshold": 0.45,
+  "longRangeDistanceThreshold": 80,
+  "suppressorUsageThreshold": 0.50,
+  "heavyArmorUsageThreshold": 0.50,
+  "survivalRateThreshold": 0.60,
+
+  // Safety caps for generated attachments and ammunition upgrades.
+  "maximumAttachmentDepth": 3,
+  "ammoPenetrationIncrease": 8,
+  "ammoPenetrationCap": 50,
+
+  "enableNightVision": true,
+  "enableFaceProtection": true,
+  "enableLongRangeOptics": true,
+  "enableHearingProtection": true,
+  "enableArmorPiercingAmmo": true,
+
+  "debugLogging": false
+}

@@ -24,6 +24,11 @@ public sealed class SettingsLoader(ISptLogger<SettingsLoader> logger)
         return await LoadAsync(filePath, RuntimeInjectionSettings.Default, "Runtime injection settings");
     }
 
+    public async Task<CountermeasureProtocolSettings> LoadCountermeasureProtocolAsync(string filePath)
+    {
+        return await LoadAsync(filePath, CountermeasureProtocolSettings.Default, "Countermeasure Protocol settings");
+    }
+
     private async Task<T> LoadAsync<T>(string filePath, T defaults, string description)
     {
         if (!File.Exists(filePath))

@@ -5,6 +5,8 @@ It also adds hideout crafting recipes, extends weapon magazine/ammo compatibilit
 3D models will be added in the future.
 Every item this mod brings into the game is labeled with "SALCO's ARMORY:" to make it easy to recognize where items come from.
 
+Starting with version 0.3.0, the optional **SALCO's Countermeasure Protocol** learns from recent PMC raids and equips a limited share of future PMCs with plausible countermeasures. It never controls bot spawns, personalities, movement, combat decisions, looting or extraction.
+
 The mod is not final. Expect changes at any time.
 
 ---
@@ -40,6 +42,25 @@ Then close the game and the server.
 3. Once you have opened the file, find the entry `"removeModItemsFromProfile": false,` and set the value to `true`. Then save the file.
 4. Start the server and wait until the server has deleted all files that are part of the mod.
 5. You can now close the server and change the value back from `true` to `false`.
+
+### GAMEPLAY SYSTEMS
+
+**SALCO'S COUNTERMEASURE PROTOCOL**
+
+- Learns from the five most recent PMC raids.
+- Starts reacting after at least three recorded raids.
+- Measures night activity, headshot ratio, kill distance, suppressor use, heavy armor use and survival rate.
+- Applies countermeasures to 25-35% of eligible PMCs, depending on measured pressure.
+- Applies no more than two countermeasures to one bot.
+- Can add compatible night vision, face protection, long-range optics or hearing protection.
+- Can moderately improve compatible ammunition against repeated heavy-armor use.
+- Only changes the finished SPT bot inventory and does not patch SAIN, ORBIT, BigBrain or ABPS.
+- Excludes Scavs, Player Scavs, bosses, guards and custom factions because only regular PMCs are eligible.
+- Stores its learning state per profile in `data/countermeasure_protocol`.
+- Can be configured in `config/countermeasure_protocol.jsonc`.
+- Fika is not supported by version 0.3.0.
+
+For configuration and compatibility details, see `docs/COUNTERMEASURE_PROTOCOL.md`.
 
 ### CONTENT
 **AMMO**

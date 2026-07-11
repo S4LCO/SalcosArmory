@@ -9,7 +9,7 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
 {
     private const string PluginGuid = "com.salco.salcosarmory.client";
     private const string PluginName = "SALCO's ARMORY Client";
-    private const string PluginVersion = "0.2.1";
+    private const string PluginVersion = "0.3.0";
 
     internal static ManualLogSource Log { get; private set; }
 

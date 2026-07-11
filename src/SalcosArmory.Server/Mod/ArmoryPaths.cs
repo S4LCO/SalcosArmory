@@ -41,6 +41,19 @@ public sealed record ArmoryPaths(
     }
 
     public string SettingsFile => Path.Combine(Config, "settings.json");
+    public string CountermeasureData => Path.Combine(Root, "data", "countermeasure_protocol");
+
+    public string CountermeasureProtocolFile
+    {
+        get
+        {
+            var jsoncFile = Path.Combine(Config, "countermeasure_protocol.jsonc");
+            return File.Exists(jsoncFile)
+                ? jsoncFile
+                : Path.Combine(Config, "countermeasure_protocol.json");
+        }
+    }
+
     public string RuntimeInjectionFile
     {
         get

@@ -1,6 +1,7 @@
 using SalcosArmory.Compat;
 using SalcosArmory.Config;
 using SalcosArmory.Content;
+using SalcosArmory.Countermeasures;
 using SalcosArmory.MedicalMerge;
 using SalcosArmory.Runtime;
 using SPTarkov.DI.Annotations;
@@ -15,6 +16,7 @@ public sealed class SalcosArmoryMod(
     WttContentLoader contentLoader,
     CompatService compatService,
     RuntimeInjectionService runtimeInjectionService,
+    CountermeasureProtocolService countermeasureProtocolService,
     MedicalMergeRegistration medicalMergeRegistration,
     ISptLogger<SalcosArmoryMod> logger
 ) : IOnLoad
@@ -60,6 +62,17 @@ public sealed class SalcosArmoryMod(
         results.Add(settings.LoadMedicalMerge
             ? medicalMergeRegistration.Register()
             : ModuleResult.Skipped("Medical merge", "Disabled in settings."));
+
+        if (settings.LoadCountermeasureProtocol)
+        {
+            var countermeasureSettings = await settingsLoader.LoadCountermeasureProtocolAsync(
+                paths.CountermeasureProtocolFile);
+            results.Add(countermeasureProtocolService.Load(countermeasureSettings, paths, settings.Debug));
+        }
+        else
+        {
+            results.Add(ModuleResult.Skipped("Countermeasure Protocol", "Disabled in settings."));
+        }
 
         foreach (var result in results)
         {
