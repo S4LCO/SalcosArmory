@@ -7,7 +7,7 @@ namespace SalcosArmory.Client;
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 internal sealed class MedicalMergePlugin : BaseUnityPlugin
 {
-    private const string PluginGuid = "com.salco.salcosarmory.client";
+    private const string PluginGuid = "com.salco.salcosarmory";
     private const string PluginName = "SALCO's ARMORY Client";
     private const string PluginVersion = "0.3.0";
 
