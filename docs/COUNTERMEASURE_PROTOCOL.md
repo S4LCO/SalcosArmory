@@ -60,4 +60,4 @@ Learning state is stored per profile in `data/countermeasure_protocol`. Deleting
 
 ## Fika
 
-Version 0.3.0 is designed for singleplayer SPT. Fika is deliberately excluded until per-player raid ownership and host/client state handling are implemented and tested.
+Countermeasure Protocol is designed for singleplayer SPT. Fika is deliberately excluded until per-player raid ownership and host/client state handling are implemented and tested.

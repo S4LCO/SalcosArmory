@@ -22,6 +22,14 @@ It was never a question of me giving up modding altogether, but due to these eve
 And now it’s clear: back to my roots. Back to where it all began: SALCO’s ARMORY.
 
 ### INSTALLATION
+#### REQUIREMENTS
+
+- **SPT 4.0.13**
+- **WTT - Server CommonLib 2.0.23 or newer within the 2.x release line**
+- **WTT - Content Backport 1.1.0 or newer within the 1.x release line**
+
+Major dependency updates may contain breaking changes and require a matching SALCO's ARMORY update.
+
 1. Backup your profile before every update!!!
 2. Delete every previous version **completely**!!!
 3. Clear your caches!!!
@@ -58,7 +66,7 @@ Then close the game and the server.
 - Excludes Scavs, Player Scavs, bosses, guards and custom factions because only regular PMCs are eligible.
 - Stores its learning state per profile in `data/countermeasure_protocol`.
 - Can be configured in `config/countermeasure_protocol.jsonc`.
-- Fika is not supported by version 0.3.0.
+- Fika is currently not supported.
 
 For configuration and compatibility details, see `docs/COUNTERMEASURE_PROTOCOL.md`.
 

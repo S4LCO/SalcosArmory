@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
 
     <OutputPath>bin\$(Configuration)\SalcosArmory\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -20,7 +20,8 @@
     <PackageReference Include="SPTarkov.DI" Version="4.0.13" />
     <PackageReference Include="SPTarkov.Reflection" Version="4.0.13" />
     <PackageReference Include="SPTarkov.Server.Core" Version="4.0.13" />
-    <PackageReference Include="WTT-ServerCommonLib" Version="2.0.20" />
+    <!-- Build against the current minimum supported CommonLib release. -->
+    <PackageReference Include="WTT-ServerCommonLib" Version="2.0.23" />
   </ItemGroup>
 
   <ItemGroup>

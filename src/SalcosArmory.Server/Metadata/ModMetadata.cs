@@ -20,8 +20,8 @@ public sealed record ModMetadata : AbstractModMetadata
 
     public override Dictionary<string, Range>? ModDependencies { get; init; } = new()
     {
-        ["com.wtt.commonlib"] = new Range("~2.0.20"),
-        ["com.wtt.contentbackport"] = new Range("~1.0.7")
+        ["com.wtt.commonlib"] = new Range(ArmoryInfo.WttCommonLibVersionRange),
+        ["com.wtt.contentbackport"] = new Range(ArmoryInfo.WttContentBackportVersionRange)
     };
 
     public override bool? IsBundleMod { get; init; } = false;
