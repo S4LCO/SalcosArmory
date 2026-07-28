@@ -7,6 +7,8 @@ Every item this mod brings into the game is labeled with "SALCO's ARMORY:" to ma
 
 Starting with version 0.3.0, the optional **SALCO's Countermeasure Protocol** learns from recent PMC raids and equips a limited share of future PMCs with plausible countermeasures. It never controls bot spawns, personalities, movement, combat decisions, looting or extraction.
 
+Starting with version 0.4.0, **Wayland** serves as SALCO's ARMORY's dedicated trader. His inventory is generated automatically from the mod's content and can be customized through a documented configuration file.
+
 The mod is not final. Expect changes at any time.
 
 ---
@@ -52,6 +54,24 @@ Then close the game and the server.
 5. You can now close the server and change the value back from `true` to `false`.
 
 ### GAMEPLAY SYSTEMS
+
+**WAYLAND**
+
+- A dedicated trader who exclusively sells equipment from SALCO's ARMORY.
+- Automatically includes supported SALCO items, including content added by future updates.
+- Uses four loyalty levels with individual prices, stock limits and purchase limits.
+- Buys the same item categories as Mechanic.
+- Can show or hide his offers on the flea market.
+- Can be configured in `config/wayland.jsonc`.
+
+**B.O.N.E. VITAL SURGERY**
+
+- B.O.N.E. can restore a blacked-out head or chest if the player is still alive.
+- A blacked-out head is treated first, followed by a blacked-out chest.
+- Each treatment consumes one normal B.O.N.E. charge and restores the body part at 1 HP.
+- The existing random maximum-health penalty of 35-65% is applied after every treatment.
+- Repeated treatments are possible, but their maximum-health penalties compound.
+- B.O.N.E. cannot revive a dead player, and no other stim or surgical kit receives this ability.
 
 **SALCO'S COUNTERMEASURE PROTOCOL**
 

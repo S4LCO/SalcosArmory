@@ -1,0 +1,75 @@
+{
+  // Show Wayland's offers when players search for these items on the flea market.
+  "showOffersOnFlea": true,
+
+  // Automatic price order:
+  // 1. An item-specific "price" below is a fixed final price and skips automatic pricing.
+  // 2. "flea" uses fleaPriceRoubles and falls back to handbookPriceRoubles.
+  // 3. "handbook" always uses handbookPriceRoubles instead.
+  // 4. An automatically selected price is multiplied by priceMultiplier and cannot fall below minimumPrice.
+  "priceSource": "flea",
+
+  // Multiplies every automatically generated price. 1.0 means 100%, 1.2 means 120%.
+  "priceMultiplier": 1.0,
+  "minimumPrice": 1,
+
+  // Wayland refreshes after a random duration inside this range.
+  "refreshTimeMinMinutes": 60,
+  "refreshTimeMaxMinutes": 120,
+
+  // Default loyalty level and personal purchase limit per refresh for every content folder.
+  // Armor inserts inside a Level_3/4/5/6 folder automatically use LL1/2/3/4.
+  "categories": {
+    "CustomAmmo":       { "loyaltyLevel": 2, "stock": 180 },
+    "CustomContainers": { "loyaltyLevel": 2, "stock": 1 },
+    "CustomGear":       { "loyaltyLevel": 2, "stock": 2 },
+    "CustomMagazines":  { "loyaltyLevel": 2, "stock": 8 },
+    "CustomMeds":       { "loyaltyLevel": 2, "stock": 3 },
+    "CustomWeapons":    { "loyaltyLevel": 2, "stock": 2 }
+  },
+
+  // Item-specific values override the category defaults above.
+  // Set "enabled" to false if an item should not be sold by Wayland.
+  // Add "price" only when an item should use a fixed price instead of the automatic one.
+  "itemOverrides": {
+    // Ammunition
+    "6a46b5ec55354e6b4b5f2756": { "loyaltyLevel": 2, "stock": 180 }, // .45 ACP Warden
+    "6a46b4e970caf2c92cda1007": { "loyaltyLevel": 4, "stock": 120 }, // 5.45x39 7N39M
+    "6a46b4fef14c448553778f95": { "loyaltyLevel": 4, "stock": 120 }, // 5.56x45 M995A1
+    "6a46a967bae4cc4c6974ff63": { "loyaltyLevel": 4, "stock": 80 },  // 6.8x51 Blutadler
+    "6a46a98a99b1351b560843ef": { "loyaltyLevel": 3, "stock": 120 }, // .300 BLK Spartans
+    "6a46b5d55aa43208a7bb9f5d": { "loyaltyLevel": 3, "stock": 120 }, // 7.62x39 7N23M
+
+    // Containers and special equipment
+    "6a46baee0d186b7e2875018c": { "loyaltyLevel": 2, "stock": 1 }, // Ammo Pouch
+    "6a46bef11b5be15aaaca5e8e": { "loyaltyLevel": 3, "stock": 1 }, // Item Pouch
+    "6a46bb182c5e673e6bd10eed": { "loyaltyLevel": 2, "stock": 1 }, // Medic Pouch
+    "6a46be76318c1d6df152c6dd": { "loyaltyLevel": 4, "stock": 1 }, // DELTA secure container
+    "6a496016abdc368b201e318d": { "loyaltyLevel": 3, "stock": 2 }, // 6B45 armored rig
+    "6a4811b668d416689edd8e08": { "loyaltyLevel": 3, "stock": 1 }, // BEAR armband container
+    "6a4811d42646d3407023b1bd": { "loyaltyLevel": 3, "stock": 1 }, // USEC armband container
+
+    // Magazines
+    "6a46c35c305036333688cd0a": { "loyaltyLevel": 2, "stock": 8 }, // AK-300 magazine
+    "6a46c3d8625924018c090454": { "loyaltyLevel": 3, "stock": 6 }, // Multi-caliber 60-round magazine
+    "6a46c432c8845ba02b25ef73": { "loyaltyLevel": 2, "stock": 8 }, // Unit-12 20-round magazine
+    "6a46c45d5926a117f3dec591": { "loyaltyLevel": 3, "stock": 6 }, // Unit-12 30-round magazine
+
+    // Medical items and stimulants
+    "6a46c6807d318e03411d4145": { "loyaltyLevel": 1, "stock": 5 }, // UFAK
+    "6a46c64a69e589334c909215": { "loyaltyLevel": 2, "stock": 3 }, // Surv12
+    "6a46c750a758d8abcbb100c2": { "loyaltyLevel": 2, "stock": 4 }, // D.I.N.N.E.R-41
+    "6a46c75c9b26627eb77350fa": { "loyaltyLevel": 3, "stock": 3 }, // MSJ6
+    "6a46c77a6744eaae5caca0a8": { "loyaltyLevel": 4, "stock": 2 }, // pTG-change
+    "6a46c6bd54c2760498b84f47": { "loyaltyLevel": 4, "stock": 1 }, // B.O.N.E.
+
+    // Weapons and grenade
+    "6a47c3496b85930dc73bf3aa": { "loyaltyLevel": 2, "stock": 2 }, // AK-9
+    "6a47c7ccbb4634f8bd41a85c": { "loyaltyLevel": 3, "stock": 2 }, // AK-300
+    "6a4813be6c924ffc52900908": { "loyaltyLevel": 2, "stock": 3 }, // M67 RD
+    "6a47d0af5ea923ebebe5a1b5": { "loyaltyLevel": 2, "stock": 2 }, // M85 Revenant
+    "6a47d3ef1f3e1fd70fe3c29e": { "loyaltyLevel": 3, "stock": 2 }, // SCAR-300
+    "6a47d1f1e0cecb62e4dccbec": { "loyaltyLevel": 4, "stock": 2 }, // SCAR-68
+    "6a492ea31a8326f9d8e55b87": { "loyaltyLevel": 4, "stock": 2 }  // Unit-12
+  }
+}

@@ -29,6 +29,11 @@ public sealed class SettingsLoader(ISptLogger<SettingsLoader> logger)
         return await LoadAsync(filePath, CountermeasureProtocolSettings.Default, "Countermeasure Protocol settings");
     }
 
+    public async Task<WaylandSettings> LoadWaylandAsync(string filePath)
+    {
+        return await LoadAsync(filePath, WaylandSettings.Default, "Wayland settings");
+    }
+
     private async Task<T> LoadAsync<T>(string filePath, T defaults, string description)
     {
         if (!File.Exists(filePath))

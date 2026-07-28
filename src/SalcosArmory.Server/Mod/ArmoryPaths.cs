@@ -5,6 +5,7 @@ public sealed record ArmoryPaths(
     string Config,
     string Database,
     string Bundles,
+    string Resources,
     string CustomItems,
     string CustomWeaponPresets,
     string CustomRecipes,
@@ -30,6 +31,7 @@ public sealed record ArmoryPaths(
             Config: config,
             Database: db,
             Bundles: Path.Combine(root, "bundles"),
+            Resources: Path.Combine(root, "res"),
             CustomItems: Path.Combine(db, "CustomItems"),
             CustomWeaponPresets: Path.Combine(db, "CustomWeaponPresets"),
             CustomRecipes: Path.Combine(db, "CustomHideoutRecipes"),
@@ -62,6 +64,20 @@ public sealed record ArmoryPaths(
             return File.Exists(jsoncFile)
                 ? jsoncFile
                 : Path.Combine(Config, "runtime_injection.json");
+        }
+    }
+
+    public string WaylandBaseFile => Path.Combine(Database, "traders", "wayland", "base.json");
+    public string WaylandPortraitFile => Path.Combine(Resources, "wayland.png");
+
+    public string WaylandConfigFile
+    {
+        get
+        {
+            var jsoncFile = Path.Combine(Config, "wayland.jsonc");
+            return File.Exists(jsoncFile)
+                ? jsoncFile
+                : Path.Combine(Config, "wayland.json");
         }
     }
 }

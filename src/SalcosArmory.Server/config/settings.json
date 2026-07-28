@@ -8,6 +8,7 @@
   "loadRuntimeInjection": true,
   "loadMedicalMerge": true,
   "loadCountermeasureProtocol": true,
+  "loadWaylandTrader": true,
   "debug": false,
   "strictMode": false
 }

@@ -11,6 +11,7 @@ public sealed class ArmorySettings
     public bool LoadRuntimeInjection { get; init; } = false;
     public bool LoadMedicalMerge { get; init; } = true;
     public bool LoadCountermeasureProtocol { get; init; } = true;
+    public bool LoadWaylandTrader { get; init; } = true;
     public bool Debug { get; init; } = false;
     public bool StrictMode { get; init; } = false;
 

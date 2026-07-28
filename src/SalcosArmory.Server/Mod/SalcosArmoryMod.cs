@@ -4,6 +4,7 @@ using SalcosArmory.Content;
 using SalcosArmory.Countermeasures;
 using SalcosArmory.MedicalMerge;
 using SalcosArmory.Runtime;
+using SalcosArmory.Traders;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Utils;
@@ -17,6 +18,7 @@ public sealed class SalcosArmoryMod(
     CompatService compatService,
     RuntimeInjectionService runtimeInjectionService,
     CountermeasureProtocolService countermeasureProtocolService,
+    WaylandTraderService waylandTraderService,
     MedicalMergeRegistration medicalMergeRegistration,
     ISptLogger<SalcosArmoryMod> logger
 ) : IOnLoad
@@ -39,6 +41,20 @@ public sealed class SalcosArmoryMod(
         {
             await contentLoader.LoadAsync(assembly, paths, settings)
         };
+
+        if (settings.LoadWaylandTrader && settings.LoadItems)
+        {
+            var waylandSettings = await settingsLoader.LoadWaylandAsync(paths.WaylandConfigFile);
+            results.Add(waylandTraderService.Load(paths, waylandSettings));
+        }
+        else
+        {
+            results.Add(ModuleResult.Skipped(
+                "Wayland trader",
+                settings.LoadWaylandTrader
+                    ? "Disabled because custom items are disabled."
+                    : "Disabled in settings."));
+        }
 
         if (settings.LoadCompat)
         {
