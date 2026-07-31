@@ -1,6 +1,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using SalcosArmory.Client.MedicalMerge;
+using SalcosArmory.Client.StimTextures;
 using SalcosArmory.Client.VitalSurgery;
 
 namespace SalcosArmory.Client;
@@ -18,6 +19,7 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
     {
         Log = Logger;
 
+        EnableStimInHandsTextures();
         EnableBoneVitalSurgery();
 
         new ConvertMedicalMergeResultPatch().Enable();
@@ -33,6 +35,26 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
         }
 
         Log.LogInfo($"{PluginName} {PluginVersion} loaded.");
+    }
+
+    private void EnableStimInHandsTextures()
+    {
+        try
+        {
+            if (!StimTextureCatalog.Initialize(Info.Location))
+            {
+                Log.LogWarning(
+                    "Custom stimulant hand textures were disabled because no valid textures were loaded."
+                );
+                return;
+            }
+
+            new StimInHandsTexturePatch().Enable();
+        }
+        catch (System.Exception ex)
+        {
+            Log.LogError($"Custom stimulant hand textures were disabled: {ex}");
+        }
     }
 
     private static void EnableBoneVitalSurgery()
