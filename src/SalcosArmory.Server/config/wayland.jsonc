@@ -21,6 +21,7 @@
   // Armor inserts inside a Level_3/4/5/6 folder automatically use LL1/2/3/4.
   "categories": {
     "CustomAmmo":       { "loyaltyLevel": 2, "stock": 180 },
+    "CustomAttachments": { "loyaltyLevel": 2, "stock": 3 },
     "CustomContainers": { "loyaltyLevel": 2, "stock": 1 },
     "CustomGear":       { "loyaltyLevel": 2, "stock": 2 },
     "CustomMagazines":  { "loyaltyLevel": 2, "stock": 8 },
@@ -58,10 +59,32 @@
     // Medical items and stimulants
     "6a46c6807d318e03411d4145": { "loyaltyLevel": 1, "stock": 5 }, // UFAK
     "6a46c64a69e589334c909215": { "loyaltyLevel": 2, "stock": 3 }, // Surv12
-    "6a46c750a758d8abcbb100c2": { "loyaltyLevel": 2, "stock": 4 }, // D.I.N.N.E.R-41
-    "6a46c75c9b26627eb77350fa": { "loyaltyLevel": 3, "stock": 3 }, // MSJ6
-    "6a46c77a6744eaae5caca0a8": { "loyaltyLevel": 4, "stock": 2 }, // pTG-change
-    "6a46c6bd54c2760498b84f47": { "loyaltyLevel": 4, "stock": 1 }, // B.O.N.E.
+    "6a46c750a758d8abcbb100c2": { "loyaltyLevel": 1, "stock": 4 }, // D.I.N.N.E.R-41
+    "6a46c75c9b26627eb77350fa": { "loyaltyLevel": 1, "stock": 3 }, // MSJ6
+    "6a46c77a6744eaae5caca0a8": { "loyaltyLevel": 2, "stock": 2 }, // pTG-change
+    "6a46c6bd54c2760498b84f47": { "loyaltyLevel": 3, "stock": 1 }, // B.O.N.E.
+    "6a70ca7e0a4a0d0f1fe00001": { "loyaltyLevel": 1, "stock": 1, "price": 1 }, // "I'm Okay"
+
+    // Custom attachments: KPYK mounts at LL1
+    "6a6b5b9c245eb0e3f85624f4": { "loyaltyLevel": 1, "stock": 3 }, // KPYK CRC 2U073 black
+    "6a6b5ba6a74d027e2fd30c27": { "loyaltyLevel": 1, "stock": 3 }, // KPYK CRC 2U073 FDE
+    "6a6b5bade6ba78980141307f": { "loyaltyLevel": 1, "stock": 3 }, // KPYK CRC 2U073 OD
+
+    // Custom attachments: front grips at LL2
+    "6a6aec12d2d4347db6224ee9": { "loyaltyLevel": 2, "stock": 3 }, // IMI Defense FSG2 black
+    "6a6aec1e7e16cf6093db448b": { "loyaltyLevel": 2, "stock": 3 }, // IMI Defense FSG2 FDE
+    "6a6aec229008394036622122": { "loyaltyLevel": 2, "stock": 3 }, // IMI Defense FSG2 OD
+
+    // Custom attachments: handguards and buttstocks at LL3
+    "6a6b5c4bcb4c88e93e43949e": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U004B black
+    "6a6b5c62e843b87c804904ec": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U004B FDE
+    "6a6b5c74dd31c805292341f3": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U004B OD
+    "6a6b5bd3a59b4de86cf16875": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U020 black
+    "6a6b5bed8fe884b9c0dadb6e": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U020 FDE
+    "6a6b5c0e75aa7d989b6b74ba": { "loyaltyLevel": 3, "stock": 2 }, // KPYK CRC 1U020 OD
+    "6a6b593b8c0e8ed0cbfcd2bb": { "loyaltyLevel": 3, "stock": 2 }, // FAB Defense GL-CORE black
+    "6a6b5940e683b8e0d41f4ff5": { "loyaltyLevel": 3, "stock": 2 }, // FAB Defense GL-CORE FDE
+    "6a6b5947fa8dc61befa62b6f": { "loyaltyLevel": 3, "stock": 2 }, // FAB Defense GL-CORE OD
 
     // Weapons and grenade
     "6a47c3496b85930dc73bf3aa": { "loyaltyLevel": 2, "stock": 2 }, // AK-9

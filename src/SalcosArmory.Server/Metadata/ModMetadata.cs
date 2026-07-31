@@ -24,5 +24,5 @@ public sealed record ModMetadata : AbstractModMetadata
         ["com.wtt.contentbackport"] = new Range(ArmoryInfo.WttContentBackportVersionRange)
     };
 
-    public override bool? IsBundleMod { get; init; } = false;
+    public override bool? IsBundleMod { get; init; } = true;
 }

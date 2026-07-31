@@ -1,0 +1,14 @@
+{
+  "6a70ca7e0a4a0d0f1fe00002": [
+    {
+      // Reuses the same vanilla effect type responsible for Obdolbos' fatal outcome.
+      "AbsoluteValue": true,
+      "BuffType": "HealthRate",
+      "Chance": 1,
+      "Delay": 0,
+      "Duration": 600,
+      "SkillName": "",
+      "Value": -10000
+    }
+  ]
+}

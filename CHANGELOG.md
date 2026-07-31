@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+- Added general AssetBundle support for custom items through CommonLib and SPT's native bundle system.
+- Added custom KPYK mounts and handguards, IMI Defense front grips, and FAB Defense buttstocks.
+- Reorganized Wayland's inventory tiers for the new attachments and the MSJ6, D.I.N.N.E.R-41, pTG-change, and B.O.N.E. stimulants.
+- Added the "I'm Okay" awareness stimulant: a deliberately non-rewarding, in-raid-only symbolic exit carrying a mental-health support message.
+
 ## 0.4.0
 
 - Added Wayland, a dedicated trader who exclusively sells content from SALCO's ARMORY.
