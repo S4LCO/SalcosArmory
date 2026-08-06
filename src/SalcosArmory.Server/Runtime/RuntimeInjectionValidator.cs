@@ -2,12 +2,11 @@ using SalcosArmory.Config;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Runtime;
 
 [Injectable(InjectionType.Singleton)]
-public sealed class RuntimeInjectionValidator(DatabaseService databaseService)
+public sealed class RuntimeInjectionValidator(TemplateTable templateTable)
 {
     public RuntimeInjectionValidation Validate(RuntimeInjectionSettings settings)
     {
@@ -15,7 +14,7 @@ public sealed class RuntimeInjectionValidator(DatabaseService databaseService)
         var errors = new List<string>();
         var resolvedTargets = new List<ResolvedRuntimeInjectionTarget>();
         var seenHosts = new HashSet<MongoId>();
-        var items = databaseService.GetItems();
+        var items = templateTable.Items;
         var configuredTargets = settings.Targets ?? [];
 
         for (var index = 0; index < configuredTargets.Count; index++)

@@ -1,14 +1,13 @@
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Runtime;
 
 [Injectable(InjectionType.Singleton)]
 public sealed class RuntimeItemInjector(
     RuntimeInjectionPlan plan,
-    DatabaseService databaseService)
+    TemplateTable templateTable)
 {
     public RuntimeInjectionReport Apply(BotBaseInventory? inventory, bool includePlayerScav, bool isPlayerScav)
     {
@@ -22,7 +21,7 @@ public sealed class RuntimeItemInjector(
             return RuntimeInjectionReport.SkippedResult;
         }
 
-        var templates = databaseService.GetItems();
+        var templates = templateTable.Items;
         var inventoryItems = inventory.Items;
         var hostsMatched = 0;
         var slotsConsidered = 0;

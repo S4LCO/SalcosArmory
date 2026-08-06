@@ -40,17 +40,17 @@
 
   // Minimum percentage of eligible enemy PMCs that can receive countermeasures
   // once at least one countermeasure has been activated. Range: 0-100.
-  "minimumAffectedPercent": 35,
+  "minimumAffectedPercent": 25,
 
   // Maximum percentage of eligible enemy PMCs that can receive countermeasures.
   // Stronger and more consistent player behaviour moves the result closer to
   // this value. Must be equal to or higher than minimumAffectedPercent. Range: 0-100.
-  "maximumAffectedPercent": 65,
+  "maximumAffectedPercent": 35,
 
   // Maximum number of different countermeasures a single affected bot may get.
   // The bot may receive fewer if the measured pressure is low or suitable items
   // cannot be added safely. Range: 1-5.
-  "maximumCountermeasuresPerBot": 4,
+  "maximumCountermeasuresPerBot": 2,
 
   // ---------------------------------------------------------------------------
   // PLAYER-BEHAVIOUR THRESHOLDS

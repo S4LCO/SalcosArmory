@@ -7,7 +7,7 @@ using EFT.InventoryLogic;
 using EFT.UI;
 using HarmonyLib;
 using SPT.Reflection.Patching;
-using InventoryInteractions = GClass3757;
+using InventoryInteractions = EFT.UI.InventoryItemContextInteractions;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
@@ -50,41 +50,41 @@ internal sealed class MedicalMergeLabelPatch : ModulePatch
     [PatchPrefix]
     private static void Prefix(
         ItemUiContext __instance,
-        ItemContextAbstractClass itemContext,
-        Dictionary<EItemInfoButton, string> ___dictionary_0)
+        ItemContext itemContext,
+        Dictionary<EItemInfoButton, string> ____contextMenuCustomNames)
     {
-        if (___dictionary_0 == null)
+        if (____contextMenuCustomNames == null)
         {
             return;
         }
 
         if (_originalTopUpLabel == null
-            && ___dictionary_0.TryGetValue(EItemInfoButton.TopUp, out var originalLabel))
+            && ____contextMenuCustomNames.TryGetValue(EItemInfoButton.TopUp, out var originalLabel))
         {
             _originalTopUpLabel = originalLabel == MedicalMergeContext.Label
                 ? EItemInfoButton.TopUp.ToString()
                 : originalLabel;
         }
 
-        var useMergeLabel = itemContext?.Item is MedsItemClass medicalItem
+        var useMergeLabel = itemContext?.Item is Meds medicalItem
             && MedicalMergeContext.IsAvailable(__instance, medicalItem);
 
         if (useMergeLabel)
         {
-            ___dictionary_0[EItemInfoButton.TopUp] = MedicalMergeContext.Label;
+            ____contextMenuCustomNames[EItemInfoButton.TopUp] = MedicalMergeContext.Label;
         }
         else if (_originalTopUpLabel != null)
         {
-            ___dictionary_0[EItemInfoButton.TopUp] = _originalTopUpLabel;
+            ____contextMenuCustomNames[EItemInfoButton.TopUp] = _originalTopUpLabel;
         }
     }
 
     [PatchPostfix]
-    private static void Postfix(Dictionary<EItemInfoButton, string> ___dictionary_0)
+    private static void Postfix(Dictionary<EItemInfoButton, string> ____contextMenuCustomNames)
     {
-        if (___dictionary_0 != null && _originalTopUpLabel != null)
+        if (____contextMenuCustomNames != null && _originalTopUpLabel != null)
         {
-            ___dictionary_0[EItemInfoButton.TopUp] = _originalTopUpLabel;
+            ____contextMenuCustomNames[EItemInfoButton.TopUp] = _originalTopUpLabel;
         }
     }
 }
@@ -117,14 +117,14 @@ internal sealed class MedicalMergeIsActivePatch : ModulePatch
     protected override MethodBase GetTargetMethod()
     {
         return AccessTools.Method(
-            typeof(ContextInteractionsAbstractClass),
-            nameof(ContextInteractionsAbstractClass.IsActive)
+            typeof(ContextInteractions<EItemInfoButton>),
+            nameof(ContextInteractions<EItemInfoButton>.IsActive)
         );
     }
 
     [PatchPostfix]
     private static void Postfix(
-        ContextInteractionsAbstractClass __instance,
+        ContextInteractions<EItemInfoButton> __instance,
         EItemInfoButton button,
         ref bool __result)
     {
@@ -142,14 +142,14 @@ internal sealed class MedicalMergeIsInteractivePatch : ModulePatch
     protected override MethodBase GetTargetMethod()
     {
         return AccessTools.Method(
-            typeof(ContextInteractionsAbstractClass),
-            nameof(ContextInteractionsAbstractClass.IsInteractive)
+            typeof(ContextInteractions<EItemInfoButton>),
+            nameof(ContextInteractions<EItemInfoButton>.IsInteractive)
         );
     }
 
     [PatchPostfix]
     private static void Postfix(
-        ContextInteractionsAbstractClass __instance,
+        ContextInteractions<EItemInfoButton> __instance,
         EItemInfoButton button,
         ref object __result)
     {
@@ -162,14 +162,14 @@ internal sealed class MedicalMergeIsInteractivePatch : ModulePatch
     }
 
     private static object GetEnabledInteractionResult(
-        ContextInteractionsAbstractClass interactions,
+        ContextInteractions<EItemInfoButton> interactions,
         object fallback)
     {
         try
         {
             var method = AccessTools.Method(
-                typeof(ContextInteractionsAbstractClass),
-                nameof(ContextInteractionsAbstractClass.IsInteractive),
+                typeof(ContextInteractions<EItemInfoButton>),
+                nameof(ContextInteractions<EItemInfoButton>.IsInteractive),
                 new[] { typeof(EItemInfoButton) }
             );
 

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.0
+
+- Expanded the player Pockets equipment from three to six Special Slots, displayed as two rows of three.
+- Added the Field Armor Repair Kit, sold by Wayland at loyalty level 3.
+- Added a narrowly scoped client patch that allows only the Field Armor Repair Kit to repair body armor and ballistic plates during a raid.
+- Allowed the Field Armor Repair Kit to target armor carriers and repair their installed plates without removing them first.
+- Restricted FARK-initiated repair windows to the carried FARK; trader repair and other repair kits are not offered.
+- Kept the vanilla Body armor repair kit and weapon repair behavior unchanged.
+- Reduced the field kit to 400 repair points and 6 kg to distinguish it from the full workshop kit.
+- Prevented expected red CommonLib creation errors when optional Content Backport templates are unavailable.
+- Moved custom-item, extended-Pockets and Wayland registration into SPT's preload phase so profile migrations recognize SALCO items and trader data.
+
+## 0.4.2
+
+- Updated the server and client modules for SPT 4.1.2.
+- Updated the WTT CommonLib dependency to the compatible 3.x release line, starting with 3.0.3.
+- Ported Medical Merge to SPT 4.1's public inventory-operation names and serialization registry.
+- Made WTT Content Backport optional so unavailable backport templates no longer prevent the rest of SALCO's ARMORY from loading.
+- Added a clear startup warning when Content Backport templates are unavailable; only dependent items are skipped.
+
 ## 0.4.1
 
 - Added general AssetBundle support for custom items through CommonLib and SPT's native bundle system.

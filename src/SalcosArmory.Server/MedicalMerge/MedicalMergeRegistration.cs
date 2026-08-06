@@ -1,22 +1,23 @@
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Utils;
-using SPTarkov.Server.Core.Utils.Json.Converters;
 
 namespace SalcosArmory.MedicalMerge;
 
 [Injectable(InjectionType.Singleton)]
-public sealed class MedicalMergeRegistration(JsonUtil jsonUtil)
+public sealed class MedicalMergeFeatureState
+{
+    public bool Enabled { get; set; }
+}
+
+[Injectable(InjectionType.Singleton)]
+public sealed class MedicalMergeRegistration(MedicalMergeFeatureState state)
 {
     public ModuleResult Register()
     {
-        BaseInteractionRequestDataConverter.RegisterModDataHandler(
-            MedicalMergeRequest.ActionName,
-            jsonUtil.Deserialize<MedicalMergeRequest>
-        );
+        state.Enabled = true;
 
         return ModuleResult.Ok(
             "Medical merge",
-            $"Registered item-event action '{MedicalMergeRequest.ActionName}'."
+            $"Enabled item-event action '{MedicalMergeRequest.ActionName}'."
         );
     }
 }

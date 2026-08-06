@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using Comfort.Common;
+using EFT;
 using EFT.InventoryLogic;
+using EFT.InventoryLogic.Operations;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
-internal sealed class MedicalMergeOperation : GClass3475<MedicalMergeResult>
+internal sealed class MedicalMergeOperation : AbstractAsyncOperation<MedicalMergeResult>
 {
     private readonly Item _sourceItem;
     private readonly ItemAddress _sourceAddress;
@@ -14,7 +16,7 @@ internal sealed class MedicalMergeOperation : GClass3475<MedicalMergeResult>
 
     public MedicalMergeOperation(
         ushort id,
-        TraderControllerClass controller,
+        ItemController controller,
         MedicalMergeResult result)
         : base(id, controller, result)
     {
@@ -27,18 +29,27 @@ internal sealed class MedicalMergeOperation : GClass3475<MedicalMergeResult>
 
     public override async Task<IResult> ExecuteInternal()
     {
-        await method_3(_sourceItem, _sourceAddress, _targetAddress, new GClass3397(_sourceItem, this));
+        await OutProcess(
+            _sourceItem,
+            _sourceAddress,
+            _targetAddress,
+            new AddSuboperation(_sourceItem, this)
+        );
         Execute();
-        await method_4(_targetItem, _targetAddress, new GClass3398(_targetItem, _targetAddress, this));
-        return method_5();
+        await InProcess(
+            _targetItem,
+            _targetAddress,
+            new RemoveSuboperation(_targetItem, _targetAddress, this)
+        );
+        return FinishExecution();
     }
 
-    public override GClass3471 ToBaseInventoryCommand(string ownerId)
+    public override BaseInventoryCommand ToBaseInventoryCommand(string ownerId)
     {
-        return Gstruct156_0.Value.ToCommand();
+        return new MedicalMergeCommand(_sourceItem.Id, _targetItem.Id, _transferAmount);
     }
 
-    public override BaseDescriptorClass ToDescriptor()
+    public override InventoryOperationDescriptor ToDescriptor()
     {
         return new MedicalMergeDescriptor
         {

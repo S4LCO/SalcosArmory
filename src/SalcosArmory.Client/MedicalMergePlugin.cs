@@ -1,6 +1,9 @@
 using BepInEx;
 using BepInEx.Logging;
+using EFT.BinarySerialization;
+using SalcosArmory.Client.FieldRepair;
 using SalcosArmory.Client.MedicalMerge;
+using SalcosArmory.Client.SpecialSlots;
 using SalcosArmory.Client.StimTextures;
 using SalcosArmory.Client.VitalSurgery;
 
@@ -11,7 +14,7 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
 {
     private const string PluginGuid = "com.salco.salcosarmory";
     private const string PluginName = "SALCO's ARMORY Client";
-    private const string PluginVersion = "0.4.1";
+    private const string PluginVersion = "0.5.0";
 
     internal static ManualLogSource Log { get; private set; }
 
@@ -21,6 +24,8 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
 
         EnableStimInHandsTextures();
         EnableBoneVitalSurgery();
+        EnableFieldArmorRepair();
+        EnableSpecialSlotLayout();
 
         new ConvertMedicalMergeResultPatch().Enable();
         new MedicalMergeAvailableInteractionsPatch().Enable();
@@ -29,12 +34,39 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
         new MedicalMergeIsActivePatch().Enable();
         new MedicalMergeIsInteractivePatch().Enable();
 
-        if (!GClass3695.List_0.Contains(typeof(MedicalMergeDescriptor)))
+        if (!BinarySerializationMirrorExtensions._types.Contains(typeof(MedicalMergeDescriptor)))
         {
-            GClass3695.List_0.Add(typeof(MedicalMergeDescriptor));
+            BinarySerializationMirrorExtensions._types.Add(typeof(MedicalMergeDescriptor));
         }
 
         Log.LogInfo($"{PluginName} {PluginVersion} loaded.");
+    }
+
+    private static void EnableFieldArmorRepair()
+    {
+        try
+        {
+            new FieldArmorRepairPatch().Enable();
+            new FieldArmorRepairersPatch().Enable();
+            Log.LogInfo("Field Armor Repair Kit raid interaction enabled.");
+        }
+        catch (System.Exception ex)
+        {
+            Log.LogError($"Field Armor Repair Kit was disabled: {ex}");
+        }
+    }
+
+    private static void EnableSpecialSlotLayout()
+    {
+        try
+        {
+            new SpecialSlotLayoutPatch().Enable();
+            Log.LogInfo("Extended Special Slots 3x2 layout enabled.");
+        }
+        catch (System.Exception ex)
+        {
+            Log.LogError($"Extended Special Slots layout was disabled: {ex}");
+        }
     }
 
     private void EnableStimInHandsTextures()

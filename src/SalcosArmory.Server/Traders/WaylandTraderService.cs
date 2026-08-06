@@ -3,24 +3,23 @@ using System.Text;
 using System.Text.Json;
 using SalcosArmory.Config;
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Routers;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Traders;
 
-#pragma warning disable CS0618 // ConfigServer is the supported configuration access point in SPT 4.0.13.
 [Injectable(InjectionType.Singleton)]
 public sealed class WaylandTraderService(
     ModHelper modHelper,
     ImageRouter imageRouter,
-    ConfigServer configServer,
-    DatabaseService databaseService,
+    TraderConfig traderConfig,
+    RagfairConfig ragfairConfig,
+    TemplateTable templateTable,
+    TradersTable tradersTable,
+    LocaleTable localeTable,
     ISptLogger<WaylandTraderService> logger
 )
 {
@@ -97,7 +96,7 @@ public sealed class WaylandTraderService(
             LoyalLevelItems = new Dictionary<MongoId, int>()
         };
 
-        var knownTemplates = databaseService.GetItems();
+        var knownTemplates = templateTable.Items;
         var seenTemplates = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var entry in ReadCatalog(paths.CustomItems).OrderBy(entry => entry.RelativePath))
@@ -204,7 +203,6 @@ public sealed class WaylandTraderService(
     {
         var minMinutes = Math.Max(1, settings.RefreshTimeMinMinutes);
         var maxMinutes = Math.Max(minMinutes, settings.RefreshTimeMaxMinutes);
-        var traderConfig = configServer.GetConfig<TraderConfig>();
         traderConfig.UpdateTime.RemoveAll(update => update.TraderId == traderId);
         traderConfig.UpdateTime.Add(new UpdateTime
         {
@@ -223,20 +221,20 @@ public sealed class WaylandTraderService(
             Dialogue = new Dictionary<string, List<string>?>(),
             QuestAssort = new Dictionary<string, Dictionary<MongoId, MongoId>>
             {
-                ["Started"] = new(),
-                ["Success"] = new(),
-                ["Fail"] = new()
+                ["started"] = new(),
+                ["success"] = new(),
+                ["fail"] = new()
             }
         };
 
-        databaseService.GetTables().Traders[traderBase.Id] = trader;
-        configServer.GetConfig<RagfairConfig>().Traders[traderBase.Id] = showOffersOnFlea;
+        tradersTable[traderBase.Id] = trader;
+        ragfairConfig.Traders[traderBase.Id] = showOffersOnFlea;
     }
 
     private void InheritMechanicBuyRules(TraderBase traderBase)
     {
         MongoId mechanicTraderId = MechanicTraderId;
-        if (!databaseService.GetTables().Traders.TryGetValue(mechanicTraderId, out var mechanic))
+        if (!tradersTable.TryGetValue(mechanicTraderId, out var mechanic))
         {
             throw new InvalidOperationException("Mechanic could not be found; Wayland's buy rules cannot be initialized.");
         }
@@ -251,7 +249,7 @@ public sealed class WaylandTraderService(
         var nickname = traderBase.Nickname ?? "Wayland";
         var location = traderBase.Location ?? "The Old Workshop";
 
-        foreach (var locale in databaseService.GetTables().Locales.Global.Values)
+        foreach (var locale in localeTable.Global.Values)
         {
             locale.AddTransformer(data =>
             {
@@ -350,4 +348,3 @@ public sealed class WaylandTraderService(
         int HandbookPrice,
         int FleaPrice);
 }
-#pragma warning restore CS0618

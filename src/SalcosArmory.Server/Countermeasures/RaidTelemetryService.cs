@@ -1,19 +1,17 @@
 using SalcosArmory.Config;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Extensions;
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Match;
 using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Countermeasures;
 
 [Injectable(InjectionType.Singleton)]
 public sealed class RaidTelemetryService(
     ProfileHelper profileHelper,
-    DatabaseService databaseService,
+    TemplateTable templateTable,
     ItemBaseClassService itemBaseClassService,
     CountermeasureStateStore stateStore,
     ISptLogger<RaidTelemetryService> logger)
@@ -131,7 +129,7 @@ public sealed class RaidTelemetryService(
 
     private bool HasHeavyArmor(BotBaseInventory inventory, int armorClassThreshold)
     {
-        var templates = databaseService.GetItems();
+        var templates = templateTable.Items;
         return GetEquippedTree(inventory, "ArmorVest", "TacticalVest")
             .Any(item => IsWornArmorComponent(item)
                 && templates.TryGetValue(item.Template, out var template)

@@ -1,7 +1,6 @@
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Compat;
 
@@ -11,7 +10,7 @@ public sealed class CompatService(
     CompatValidator validator,
     ItemSlotPatcher itemSlotPatcher,
     SpecialSlotPatcher specialSlotPatcher,
-    DatabaseService database,
+    TemplateTable templateTable,
     ISptLogger<CompatService> logger
 )
 {
@@ -64,7 +63,7 @@ public sealed class CompatService(
             return ModuleResult.Skipped("Compat", $"No applicable compat rules found. SkippedFiles={skippedFiles}.");
         }
 
-        var items = database.GetItems();
+        var items = templateTable.Items;
         var report = new CompatReport
         {
             Files = configs.Count,

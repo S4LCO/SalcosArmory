@@ -4,7 +4,7 @@ using System.Reflection;
 using EFT.InventoryLogic;
 using EFT.UI;
 using HarmonyLib;
-using InventoryInteractions = GClass3757;
+using InventoryInteractions = EFT.UI.InventoryItemContextInteractions;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
@@ -14,7 +14,7 @@ internal static class MedicalMergeContext
     public const string Label = "Merge";
 
     private static readonly FieldInfo ControllerField =
-        AccessTools.Field(typeof(ItemUiContext), "traderControllerClass");
+        AccessTools.Field(typeof(ItemUiContext), "_itemController");
 
     private static readonly FieldInfo InventoryField =
         AccessTools.GetDeclaredFields(typeof(ItemUiContext))
@@ -25,28 +25,28 @@ internal static class MedicalMergeContext
         return TryGet(interactions, out _, out _, out var sources) && sources.Count > 0;
     }
 
-    public static bool IsAvailable(ItemUiContext context, MedsItemClass target)
+    public static bool IsAvailable(ItemUiContext context, Meds target)
     {
         return TryGet(context, target, out _, out _, out var sources) && sources.Count > 0;
     }
 
     public static bool TryGet(
         InventoryInteractions interactions,
-        out TraderControllerClass itemController,
-        out MedsItemClass target,
-        out List<MedsItemClass> sources)
+        out ItemController itemController,
+        out Meds target,
+        out List<Meds> sources)
     {
         itemController = null;
         target = null;
-        sources = new List<MedsItemClass>();
+        sources = new List<Meds>();
 
-        if (interactions?.Item_0 is not MedsItemClass targetItem)
+        if (interactions?.Item is not Meds targetItem)
         {
             return false;
         }
 
         return TryGet(
-            interactions.ItemUiContext_1,
+            interactions.ItemUiContext,
             targetItem,
             out itemController,
             out target,
@@ -56,14 +56,14 @@ internal static class MedicalMergeContext
 
     public static bool TryGet(
         ItemUiContext context,
-        MedsItemClass target,
-        out TraderControllerClass itemController,
-        out MedsItemClass targetItem,
-        out List<MedsItemClass> sources)
+        Meds target,
+        out ItemController itemController,
+        out Meds targetItem,
+        out List<Meds> sources)
     {
         itemController = null;
         targetItem = null;
-        sources = new List<MedsItemClass>();
+        sources = new List<Meds>();
 
         if (context == null
             || target?.MedKitComponent == null
@@ -72,7 +72,7 @@ internal static class MedicalMergeContext
             return false;
         }
 
-        if (ControllerField?.GetValue(context) is not TraderControllerClass controller
+        if (ControllerField?.GetValue(context) is not ItemController controller
             || InventoryField?.GetValue(context) is not Inventory inventory)
         {
             MedicalMergePlugin.Log.LogWarning("Medical merge is unavailable because the inventory context could not be resolved.");
@@ -82,7 +82,7 @@ internal static class MedicalMergeContext
         itemController = controller;
         targetItem = target;
         sources = inventory.GetPlayerItems()
-            .OfType<MedsItemClass>()
+            .OfType<Meds>()
             .Where(item => item.Id != target.Id)
             .Where(item => item.TemplateId == target.TemplateId)
             .Where(item => item.MedKitComponent != null)

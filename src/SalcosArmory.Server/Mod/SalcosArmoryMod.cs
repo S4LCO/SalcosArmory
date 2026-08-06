@@ -1,29 +1,26 @@
 using SalcosArmory.Compat;
 using SalcosArmory.Config;
-using SalcosArmory.Content;
 using SalcosArmory.Countermeasures;
 using SalcosArmory.MedicalMerge;
 using SalcosArmory.Runtime;
-using SalcosArmory.Traders;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Utils;
 
 namespace SalcosArmory.Mod;
 
-[Injectable(InjectionType.Singleton, TypePriority = OnLoadOrder.PostDBModLoader + 20)]
+[Injectable(InjectionType.Singleton, TypePriority = OnLoadOrder.PostLoad)]
 public sealed class SalcosArmoryMod(
     SettingsLoader settingsLoader,
-    WttContentLoader contentLoader,
+    SalcosArmoryPreload preload,
     CompatService compatService,
     RuntimeInjectionService runtimeInjectionService,
     CountermeasureProtocolService countermeasureProtocolService,
-    WaylandTraderService waylandTraderService,
     MedicalMergeRegistration medicalMergeRegistration,
     ISptLogger<SalcosArmoryMod> logger
 ) : IOnLoad
 {
-    public async Task OnLoad()
+    public async Task OnLoadAsync(CancellationToken cancellationToken)
     {
         if (!LoadGuard.Enter())
         {
@@ -31,30 +28,16 @@ public sealed class SalcosArmoryMod(
             return;
         }
 
-        var assembly = Assembly.GetExecutingAssembly();
-        var paths = ArmoryPaths.FromAssembly(assembly);
-        var settings = await settingsLoader.LoadAsync(paths.SettingsFile);
-
-        logger.Info(Log.Line($"Starting {ArmoryInfo.DisplayName} {ArmoryInfo.Version}."));
-
-        var results = new List<ModuleResult>
+        if (!preload.IsLoaded)
         {
-            await contentLoader.LoadAsync(assembly, paths, settings)
-        };
-
-        if (settings.LoadWaylandTrader && settings.LoadItems)
-        {
-            var waylandSettings = await settingsLoader.LoadWaylandAsync(paths.WaylandConfigFile);
-            results.Add(waylandTraderService.Load(paths, waylandSettings));
+            await preload.OnLoadAsync(cancellationToken);
         }
-        else
-        {
-            results.Add(ModuleResult.Skipped(
-                "Wayland trader",
-                settings.LoadWaylandTrader
-                    ? "Disabled because custom items are disabled."
-                    : "Disabled in settings."));
-        }
+
+        var paths = preload.Paths
+            ?? throw new InvalidOperationException("SALCO's ARMORY preload did not initialize its paths.");
+        var settings = preload.Settings
+            ?? throw new InvalidOperationException("SALCO's ARMORY preload did not initialize its settings.");
+        var results = new List<ModuleResult>();
 
         if (settings.LoadCompat)
         {

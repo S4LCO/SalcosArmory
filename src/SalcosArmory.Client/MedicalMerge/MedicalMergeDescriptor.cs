@@ -1,14 +1,17 @@
+using Diz.LanguageExtensions;
 using EFT;
+using EFT.InventoryLogic;
+using EFT.InventoryLogic.Operations;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
-public sealed class MedicalMergeDescriptor : BaseDescriptorClass
+public sealed class MedicalMergeDescriptor : InventoryOperationDescriptor
 {
     public string SourceItem = string.Empty;
     public string TargetItem = string.Empty;
     public float TransferAmount;
 
-    public override GStruct152<BaseInventoryOperationClass> ToInventoryOperation(IPlayer player)
+    public override OperationCreationResult<AbstractOperation> ToInventoryOperation(IPlayer player)
     {
         var sourceResult = player.FindItemById(SourceItem);
         if (sourceResult.Failed)
@@ -16,7 +19,7 @@ public sealed class MedicalMergeDescriptor : BaseDescriptorClass
             return sourceResult.Error;
         }
 
-        if (sourceResult.Value is not MedsItemClass source)
+        if (sourceResult.Value is not Meds source)
         {
             return new WrongItemTypeError(sourceResult.Value);
         }
@@ -27,7 +30,7 @@ public sealed class MedicalMergeDescriptor : BaseDescriptorClass
             return targetResult.Error;
         }
 
-        if (targetResult.Value is not MedsItemClass target)
+        if (targetResult.Value is not Meds target)
         {
             return new WrongItemTypeError(targetResult.Value);
         }
@@ -54,7 +57,7 @@ public sealed class MedicalMergeDescriptor : BaseDescriptorClass
     }
 }
 
-public sealed class WrongItemTypeError : GClass1522
+public sealed class WrongItemTypeError : StringError
 {
     public WrongItemTypeError(EFT.InventoryLogic.Item item)
         : base($"SALCO's ARMORY medical merge failed: wrong item type '{item?.TemplateId}'.")

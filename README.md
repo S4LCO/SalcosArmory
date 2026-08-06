@@ -9,6 +9,8 @@ Starting with version 0.3.0, the optional **SALCO's Countermeasure Protocol** le
 
 Starting with version 0.4.0, **Wayland** serves as SALCO's ARMORY's dedicated trader. His inventory is generated automatically from the mod's content and can be customized through a documented configuration file.
 
+Starting with version 0.5.0, player Pockets provide six Special Slots arranged in two rows of three. Wayland also sells a compact **Field Armor Repair Kit** that can repair damaged body armor and ballistic plates during a raid.
+
 The mod is not final. Expect changes at any time.
 
 ---
@@ -26,11 +28,12 @@ And now it’s clear: back to my roots. Back to where it all began: SALCO’s AR
 ### INSTALLATION
 #### REQUIREMENTS
 
-- **SPT 4.0.13**
-- **WTT - Server CommonLib 2.0.23 or newer within the 2.x release line**
-- **WTT - Content Backport 1.1.0 or newer within the 1.x release line**
+- **SPT 4.1.2**
+- **WTT - Server CommonLib 3.0.3 or newer within the 3.x release line**
+- **WTT - Content Backport:** optional; install a release explicitly compatible with SPT 4.1.x when available
 
 Major dependency updates may contain breaking changes and require a matching SALCO's ARMORY update.
+Without Content Backport, SALCO's ARMORY remains loadable, but its CENS ProFlex DX5, UNIT-12 and 6B45-dependent variants are skipped.
 
 1. Backup your profile before every update!!!
 2. Delete every previous version **completely**!!!
@@ -73,6 +76,15 @@ Then close the game and the server.
 - Repeated treatments are possible, but their maximum-health penalties compound.
 - B.O.N.E. cannot revive a dead player, and no other stim or surgical kit receives this ability.
 
+**EXTENDED SPECIAL SLOTS AND FIELD REPAIR**
+
+- Expands the three vanilla Special Slots to six, arranged in two rows of three.
+- Adds a Field Armor Repair Kit that can be carried in any Special Slot.
+- Drag the field kit onto damaged body armor during a raid to repair its armor components and installed ballistic plates without removing them.
+- A repair window opened with FARK uses only that carried kit; trader repair and other repair kits are unavailable in this field-repair flow.
+- The field kit contains 400 repair points and weighs 6 kg.
+- Only the SALCO field kit receives in-raid repair access; the vanilla armor and weapon repair kits remain unchanged.
+
 **SALCO'S COUNTERMEASURE PROTOCOL**
 
 - Learns from the five most recent PMC raids.
@@ -108,6 +120,7 @@ For configuration and compatibility details, see `docs/COUNTERMEASURE_PROTOCOL.m
 - SALCO's ARMORY: B.O.N.E. stimulant injector
 - SALCO's ARMORY: UFAK first aid kit
 - SALCO's ARMORY: Surv12 field surgical kit  
+- SALCO's ARMORY: Field Armor Repair Kit
 <br>  
 <br>  
 

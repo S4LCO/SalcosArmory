@@ -1,16 +1,14 @@
 using SalcosArmory.Config;
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Spt.Bots;
-using SPTarkov.Server.Core.Services;
 
 namespace SalcosArmory.Countermeasures;
 
 [Injectable(InjectionType.Singleton)]
 public sealed class CountermeasureInventoryService(
-    DatabaseService databaseService,
+    TemplateTable templateTable,
     ItemBaseClassService itemBaseClassService,
     ItemHelper itemHelper,
     CountermeasureStateStore stateStore)
@@ -144,7 +142,7 @@ public sealed class CountermeasureInventoryService(
             return false;
         }
 
-        if (!databaseService.GetItems().TryGetValue(equipmentRoot.Template, out var template))
+        if (!templateTable.Items.TryGetValue(equipmentRoot.Template, out var template))
         {
             return false;
         }
@@ -181,7 +179,7 @@ public sealed class CountermeasureInventoryService(
 
         foreach (var host in tree.OrderBy(_ => Random.Shared.Next()))
         {
-            if (!databaseService.GetItems().TryGetValue(host.Template, out var hostTemplate))
+            if (!templateTable.Items.TryGetValue(host.Template, out var hostTemplate))
             {
                 continue;
             }
@@ -242,7 +240,7 @@ public sealed class CountermeasureInventoryService(
             .Where(candidate => !visited.Contains(candidate))
             .Where(candidate => HasAnyBaseClass(candidate, IntermediateBaseClasses))
             .Where(candidate => !HasConflict(inventory, candidate))
-            .Where(candidate => databaseService.GetItems().TryGetValue(candidate, out var template)
+            .Where(candidate => templateTable.Items.TryGetValue(candidate, out var template)
                 && template.Properties?.Slots?.Any() == true)
             .OrderBy(_ => Random.Shared.Next())
             .Take(16)
@@ -250,7 +248,7 @@ public sealed class CountermeasureInventoryService(
 
         foreach (var intermediate in intermediates)
         {
-            if (!databaseService.GetItems().TryGetValue(intermediate, out var template))
+            if (!templateTable.Items.TryGetValue(intermediate, out var template))
             {
                 continue;
             }
@@ -303,7 +301,7 @@ public sealed class CountermeasureInventoryService(
 
     private bool TryUpgradeAmmo(BotBaseInventory inventory)
     {
-        var templates = databaseService.GetItems();
+        var templates = templateTable.Items;
         var ammoItems = inventory.Items!
             .Where(item => itemBaseClassService.ItemHasBaseClass(item.Template, BaseClasses.AMMO))
             .ToArray();
@@ -363,7 +361,7 @@ public sealed class CountermeasureInventoryService(
 
         var parent = inventory.Items!.FirstOrDefault(item =>
             string.Equals(item.Id.ToString(), ammo.ParentId, StringComparison.Ordinal));
-        if (parent is null || !databaseService.GetItems().TryGetValue(parent.Template, out var parentTemplate))
+        if (parent is null || !templateTable.Items.TryGetValue(parent.Template, out var parentTemplate))
         {
             return true;
         }
@@ -419,7 +417,7 @@ public sealed class CountermeasureInventoryService(
             return null;
         }
 
-        if (!databaseService.GetItems().TryGetValue(template, out var itemTemplate))
+        if (!templateTable.Items.TryGetValue(template, out var itemTemplate))
         {
             return null;
         }
@@ -551,7 +549,7 @@ public sealed class CountermeasureInventoryService(
             return cached;
         }
 
-        var items = databaseService.GetItems();
+        var items = templateTable.Items;
         IReadOnlyList<MongoId> result;
 
         if (items.TryGetValue(filterId, out var direct)
@@ -581,7 +579,7 @@ public sealed class CountermeasureInventoryService(
                 return cached;
             }
 
-            var result = databaseService.GetItems()
+            var result = templateTable.Items
                 .Where(pair => string.Equals(pair.Value.Type, "Item", StringComparison.OrdinalIgnoreCase))
                 .Select(pair => pair.Key)
                 .Where(candidate => itemBaseClassService.ItemHasBaseClass(candidate, baseClass))
@@ -611,7 +609,7 @@ public sealed class CountermeasureInventoryService(
 
     private bool HasConflict(BotBaseInventory inventory, MongoId candidate)
     {
-        var templates = databaseService.GetItems();
+        var templates = templateTable.Items;
         if (!templates.TryGetValue(candidate, out var candidateTemplate))
         {
             return true;
@@ -637,7 +635,7 @@ public sealed class CountermeasureInventoryService(
 
     private double Score(MongoId candidate, CountermeasureKind kind)
     {
-        if (!databaseService.GetItems().TryGetValue(candidate, out var template))
+        if (!templateTable.Items.TryGetValue(candidate, out var template))
         {
             return 0d;
         }

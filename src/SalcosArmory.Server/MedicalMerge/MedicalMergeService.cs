@@ -1,23 +1,21 @@
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Extensions;
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.ItemEvent;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Routers;
-using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Utils;
 
 namespace SalcosArmory.MedicalMerge;
 
 [Injectable(InjectionType.Singleton)]
 public sealed class MedicalMergeService(
-    EventOutputHolder eventOutputHolder,
     InventoryHelper inventoryHelper,
     HttpResponseUtil httpResponseUtil,
-    DatabaseService databaseService,
+    TemplateTable templateTable,
+    MedicalMergeFeatureState featureState,
     ISptLogger<MedicalMergeService> logger)
 {
     private const double ResourceEpsilon = 0.001d;
@@ -25,9 +23,13 @@ public sealed class MedicalMergeService(
     public ValueTask<ItemEventRouterResponse> Merge(
         PmcData pmcData,
         MedicalMergeRequest? request,
-        string sessionId)
+        MongoId sessionId,
+        ItemEventRouterResponse output)
     {
-        var output = eventOutputHolder.GetOutput(sessionId);
+        if (!featureState.Enabled)
+        {
+            return Fail(output, "Medical merge is disabled in SALCO's ARMORY settings.");
+        }
 
         if (request?.SourceItem is null || request.TargetItem is null)
         {
@@ -117,7 +119,7 @@ public sealed class MedicalMergeService(
     {
         maximumResource = 0d;
 
-        if (!databaseService.GetItems().TryGetValue(templateId, out var template) || template.Properties is null)
+        if (!templateTable.Items.TryGetValue(templateId, out var template) || template.Properties is null)
         {
             return false;
         }

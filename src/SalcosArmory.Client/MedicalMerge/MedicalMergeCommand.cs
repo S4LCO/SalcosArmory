@@ -1,10 +1,11 @@
 using System;
+using EFT.InventoryLogic.Operations;
 using Newtonsoft.Json;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
 [Serializable]
-internal sealed class MedicalMergeCommand : GClass3471
+internal sealed class MedicalMergeCommand : BaseInventoryCommand
 {
     public const string ActionName = "SalcosArmory_MergeMedical";
 

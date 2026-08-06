@@ -52,12 +52,12 @@ public sealed class SpecialSlotPatcher
         }
 
         var wanted = rule.GridIndexes is { Count: > 0 }
-            ? rule.GridIndexes.Where(x => x is >= 1 and <= 3).ToHashSet()
-            : new HashSet<int> { 1, 2, 3 };
+            ? rule.GridIndexes.Where(x => x is >= 1 and <= 6).ToHashSet()
+            : new HashSet<int> { 1, 2, 3, 4, 5, 6 };
 
         if (wanted.Count == 0)
         {
-            reason = "Special slot rule has no valid indexes. Use 1, 2 or 3.";
+            reason = "Special slot rule has no valid indexes. Use a value from 1 through 6.";
             return false;
         }
 

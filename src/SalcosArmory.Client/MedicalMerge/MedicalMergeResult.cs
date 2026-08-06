@@ -1,20 +1,22 @@
+using Diz.LanguageExtensions;
+using EFT;
 using EFT.InventoryLogic;
 
 namespace SalcosArmory.Client.MedicalMerge;
 
-internal sealed class MedicalMergeResult : IExecute, IRaiseEvents, GInterface424, GInterface429, GInterface433
+internal sealed class MedicalMergeResult : ISyncOperationResult, ITransferOrMergeResult
 {
-    private readonly MedsItemClass _source;
-    private readonly MedsItemClass _target;
-    private readonly GStruct154<GClass3408> _discard;
+    private readonly Meds _source;
+    private readonly Meds _target;
+    private readonly OperationResult<RemoveResult> _discard;
 
     public MedicalMergeResult(
-        MedsItemClass source,
+        Meds source,
         ItemAddress from,
-        MedsItemClass target,
+        Meds target,
         float transferAmount,
-        GStruct154<GClass3408> discard,
-        TraderControllerClass itemController)
+        OperationResult<RemoveResult> discard,
+        ItemController itemController)
     {
         _source = source;
         _target = target;
@@ -29,9 +31,9 @@ internal sealed class MedicalMergeResult : IExecute, IRaiseEvents, GInterface424
     public ItemAddress From { get; }
     public Item TargetItem => _target;
     public float TransferAmount { get; }
-    public TraderControllerClass ItemController { get; }
+    public ItemController ItemController { get; }
 
-    public bool CanExecute(TraderControllerClass itemController)
+    public bool CanExecute(ItemController itemController)
     {
         return _source != null
             && _target != null
@@ -40,7 +42,7 @@ internal sealed class MedicalMergeResult : IExecute, IRaiseEvents, GInterface424
             && _source.TemplateId == _target.TemplateId;
     }
 
-    public GStruct153 Execute()
+    public OperationResult Execute()
     {
         return MedicalMergeInteraction.TryMerge(
             _source,

@@ -1,3 +1,4 @@
+using Diz.LanguageExtensions;
 using EFT.InventoryLogic;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ internal static class MedicalMergeInteraction
     private const float ResourceEpsilon = 0.001f;
 
     public static bool CanMerge(
-        MedsItemClass source,
-        MedsItemClass target,
+        Meds source,
+        Meds target,
         out MedicalMergeBlockReason reason)
     {
         reason = MedicalMergeBlockReason.None;
@@ -46,11 +47,11 @@ internal static class MedicalMergeInteraction
         return reason == MedicalMergeBlockReason.None;
     }
 
-    public static GStruct154<MedicalMergeResult> TryMerge(
-        MedsItemClass source,
-        MedsItemClass target,
+    public static OperationResult<MedicalMergeResult> TryMerge(
+        Meds source,
+        Meds target,
         float requestedAmount,
-        TraderControllerClass itemController,
+        ItemController itemController,
         bool simulate)
     {
         if (!CanMerge(source, target, out var reason))
@@ -60,7 +61,7 @@ internal static class MedicalMergeInteraction
                 return new MedicalMergeResult(source, source.CurrentAddress, target, 0f, default, itemController);
             }
 
-            return new GClass1522($"SALCO's ARMORY medical merge failed: {reason.Describe()}.");
+            return new StringError($"SALCO's ARMORY medical merge failed: {reason.Describe()}.");
         }
 
         var sourceResource = source.MedKitComponent;
@@ -81,10 +82,10 @@ internal static class MedicalMergeInteraction
         sourceResource.HpResource = sourceIsDepleted ? 0f : originalSourceAmount - transferAmount;
         targetResource.HpResource = originalTargetAmount + transferAmount;
 
-        GStruct154<GClass3408> discard = default;
+        OperationResult<RemoveResult> discard = default;
         if (sourceIsDepleted)
         {
-            discard = InteractionsHandlerClass.Discard(source, itemController, false);
+            discard = ItemManipulator.Remove(source, itemController, false);
             if (!discard.Succeeded)
             {
                 sourceResource.HpResource = originalSourceAmount;
@@ -110,7 +111,7 @@ internal static class MedicalMergeInteraction
         );
     }
 
-    private static float GetTransferableAmount(MedsItemClass source, MedsItemClass target)
+    private static float GetTransferableAmount(Meds source, Meds target)
     {
         return Mathf.Min(
             source.MedKitComponent.HpResource,

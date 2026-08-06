@@ -84,10 +84,10 @@ public sealed class CountermeasureRaidEndPatch(
     protected override MethodBase? GetTargetMethod()
     {
         return typeof(MatchController).GetMethod(
-            nameof(MatchController.EndLocalRaid),
+            nameof(MatchController.EndLocalRaidAsync),
             BindingFlags.Instance | BindingFlags.Public,
             null,
-            [typeof(MongoId), typeof(EndLocalRaidRequestData)],
+            [typeof(MongoId), typeof(EndLocalRaidRequestData), typeof(CancellationToken)],
             null
         );
     }
