@@ -148,7 +148,7 @@ internal sealed class BoneVitalMedEffectContextPatch : ModulePatch
     {
         var medEffectType = typeof(ActiveHealthController).GetNestedType(
             "MedEffect",
-            BindingFlags.NonPublic
+            BindingFlags.Public | BindingFlags.NonPublic
         );
 
         if (medEffectType == null || !BoneVitalSurgery.ConfigureMedEffectAccess(medEffectType))

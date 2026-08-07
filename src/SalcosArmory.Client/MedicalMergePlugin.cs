@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using EFT.BinarySerialization;
 using SalcosArmory.Client.FieldRepair;
 using SalcosArmory.Client.MedicalMerge;
+using SalcosArmory.Client.Redline;
 using SalcosArmory.Client.SpecialSlots;
 using SalcosArmory.Client.StimTextures;
 using SalcosArmory.Client.VitalSurgery;
@@ -14,7 +15,7 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
 {
     private const string PluginGuid = "com.salco.salcosarmory";
     private const string PluginName = "SALCO's ARMORY Client";
-    private const string PluginVersion = "0.5.0";
+    private const string PluginVersion = "0.6.1";
 
     internal static ManualLogSource Log { get; private set; }
 
@@ -24,6 +25,7 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
 
         EnableStimInHandsTextures();
         EnableBoneVitalSurgery();
+        EnableRedline();
         EnableFieldArmorRepair();
         EnableSpecialSlotLayout();
 
@@ -40,6 +42,29 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
         }
 
         Log.LogInfo($"{PluginName} {PluginVersion} loaded.");
+    }
+
+    private void Update()
+    {
+        RedlineEffect.Update();
+    }
+
+    private void OnDestroy()
+    {
+        RedlineEffect.Shutdown();
+    }
+
+    private static void EnableRedline()
+    {
+        try
+        {
+            new RedlineMedEffectPatch().Enable();
+            Log.LogInfo("E.F.-1 REDLINE temporary maximum-health effect enabled.");
+        }
+        catch (System.Exception ex)
+        {
+            Log.LogError($"E.F.-1 REDLINE was disabled: {ex}");
+        }
     }
 
     private static void EnableFieldArmorRepair()

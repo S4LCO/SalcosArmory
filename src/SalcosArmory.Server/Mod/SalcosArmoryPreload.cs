@@ -16,7 +16,9 @@ namespace SalcosArmory.Mod;
 [Injectable(InjectionType.Singleton, TypePriority = OnLoadOrder.Preload)]
 public sealed class SalcosArmoryPreload(
     SettingsLoader settingsLoader,
+    SoftArmorBalanceService softArmorBalanceService,
     WttContentLoader contentLoader,
+    SvmPocketCompatibilityService svmPocketCompatibilityService,
     ExtendedSpecialSlotsService extendedSpecialSlotsService,
     WaylandTraderService waylandTraderService,
     ISptLogger<SalcosArmoryPreload> logger
@@ -45,11 +47,16 @@ public sealed class SalcosArmoryPreload(
         Paths = paths;
         Settings = settings;
 
+        var softArmorBalance = await settingsLoader.LoadSoftArmorBalanceAsync(
+            paths.SoftArmorBalanceFile);
+        softArmorBalanceService.Configure(softArmorBalance);
+
         logger.Info(Log.Line($"Starting {ArmoryInfo.DisplayName} {ArmoryInfo.Version} preload."));
 
         var results = new List<ModuleResult>
         {
             await contentLoader.LoadAsync(assembly, paths, settings),
+            svmPocketCompatibilityService.Prepare(),
             extendedSpecialSlotsService.Load()
         };
 

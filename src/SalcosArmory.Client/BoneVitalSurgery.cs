@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using EFT.HealthSystem;
 using EFT.InventoryLogic;
-using HarmonyLib;
 
 namespace SalcosArmory.Client.VitalSurgery;
 
@@ -94,13 +93,41 @@ internal static class BoneVitalSurgery
 
     internal static bool ConfigureMedEffectAccess(Type medEffectType)
     {
-        _medItemField = AccessTools.Field(medEffectType, "Item_0");
-        _healthControllerField = AccessTools.Field(medEffectType, "ActiveHealthController_0");
-        _bodyPartField = AccessTools.Field(medEffectType, "EbodyPart_0");
+        _medItemField = FindField(medEffectType, "_medItem", "Item_0");
+        _healthControllerField = FindField(
+            medEffectType,
+            "_healthController",
+            "ActiveHealthController_0"
+        );
+        _bodyPartField = FindField(medEffectType, "_bodyPart", "EbodyPart_0");
 
         return _medItemField != null
             && _healthControllerField != null
             && _bodyPartField != null;
+    }
+
+    private static FieldInfo FindField(Type type, params string[] names)
+    {
+        for (var current = type; current != null; current = current.BaseType)
+        {
+            foreach (var name in names)
+            {
+                var field = current.GetField(
+                    name,
+                    BindingFlags.Instance
+                        | BindingFlags.Public
+                        | BindingFlags.NonPublic
+                        | BindingFlags.DeclaredOnly
+                );
+
+                if (field != null)
+                {
+                    return field;
+                }
+            }
+        }
+
+        return null;
     }
 
     internal static TreatmentContext EnterMedEffect(object medEffect)

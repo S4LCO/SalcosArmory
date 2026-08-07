@@ -34,6 +34,11 @@ public sealed class SettingsLoader(ISptLogger<SettingsLoader> logger)
         return await LoadAsync(filePath, WaylandSettings.Default, "Wayland settings");
     }
 
+    public async Task<SoftArmorBalanceSettings> LoadSoftArmorBalanceAsync(string filePath)
+    {
+        return await LoadAsync(filePath, SoftArmorBalanceSettings.Default, "Soft armor balance settings");
+    }
+
     private async Task<T> LoadAsync<T>(string filePath, T defaults, string description)
     {
         if (!File.Exists(filePath))

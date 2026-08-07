@@ -1,0 +1,81 @@
+{
+  // Enables SALCO's role-based rebalance for the removable Soft Armor Inserts.
+  // Set this to false to use the original values stored in the item JSON files.
+  "enabled": true,
+
+  // Each class uses a front/back insert as its baseline.
+  // Durability, weight, movement penalties and prices for smaller inserts are
+  // calculated from the position multipliers below.
+  //
+  // BluntThroughput: fraction of blocked damage passed to the body; lower is better.
+  // FullSet...: intended total when front, back, both sides, groin, both shoulders
+  // and collar of the same class are installed.
+  // StaticLootWeight: relative CommonLib loot weight; lower means rarer.
+  // WaylandStock: purchase limit per individual insert and trader refresh.
+  "classes": {
+    "3": {
+      "baseDurability": 85,
+      "bluntThroughput": 0.36,
+      "fullSetWeightKg": 1.2,
+      "fullSetSpeedPenaltyPercent": 0.0,
+      "fullSetMousePenalty": 0.0,
+      "fullSetErgonomicPenalty": 0.0,
+      "repairCost": 85,
+      "frontBackFleaPrice": 25000,
+      "frontBackHandbookPrice": 20000,
+      "staticLootWeight": 300,
+      "waylandStock": 8
+    },
+    "4": {
+      "baseDurability": 75,
+      "bluntThroughput": 0.34,
+      "fullSetWeightKg": 2.0,
+      "fullSetSpeedPenaltyPercent": -1.0,
+      "fullSetMousePenalty": -0.5,
+      "fullSetErgonomicPenalty": -2.0,
+      "repairCost": 150,
+      "frontBackFleaPrice": 50000,
+      "frontBackHandbookPrice": 40000,
+      "staticLootWeight": 140,
+      "waylandStock": 5
+    },
+    "5": {
+      "baseDurability": 65,
+      "bluntThroughput": 0.31,
+      "fullSetWeightKg": 3.2,
+      "fullSetSpeedPenaltyPercent": -2.5,
+      "fullSetMousePenalty": -1.5,
+      "fullSetErgonomicPenalty": -5.0,
+      "repairCost": 250,
+      "frontBackFleaPrice": 110000,
+      "frontBackHandbookPrice": 85000,
+      "staticLootWeight": 45,
+      "waylandStock": 2
+    },
+    "6": {
+      "baseDurability": 50,
+      "bluntThroughput": 0.28,
+      "fullSetWeightKg": 4.8,
+      "fullSetSpeedPenaltyPercent": -5.0,
+      "fullSetMousePenalty": -3.0,
+      "fullSetErgonomicPenalty": -9.0,
+      "repairCost": 450,
+      "frontBackFleaPrice": 260000,
+      "frontBackHandbookPrice": 200000,
+      "staticLootWeight": 8,
+      "waylandStock": 1
+    }
+  },
+
+  // DurabilityMultiplier and PriceMultiplier are relative to a front/back insert.
+  // SetShare determines how much of the class's full-set weight and penalties an
+  // individual insert receives. The shares of a complete eight-piece set total 1.0.
+  "positions": {
+    "front":    { "durabilityMultiplier": 1.00, "setShare": 0.22, "priceMultiplier": 1.00 },
+    "back":     { "durabilityMultiplier": 1.00, "setShare": 0.22, "priceMultiplier": 1.00 },
+    "side":     { "durabilityMultiplier": 0.40, "setShare": 0.09, "priceMultiplier": 0.50 },
+    "groin":    { "durabilityMultiplier": 0.50, "setShare": 0.12, "priceMultiplier": 0.60 },
+    "shoulder": { "durabilityMultiplier": 0.30, "setShare": 0.08, "priceMultiplier": 0.35 },
+    "collar":   { "durabilityMultiplier": 0.25, "setShare": 0.10, "priceMultiplier": 0.30 }
+  }
+}

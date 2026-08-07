@@ -11,6 +11,7 @@ namespace SalcosArmory.Content;
 public sealed class WttContentLoader(
     WTTServerCommonLib.WTTServerCommonLib wtt,
     StimBuffService stimBuffService,
+    SoftArmorBalanceService softArmorBalanceService,
     TemplateTable templateTable,
     GlobalTable globalTable,
     ISptLogger<WttContentLoader> logger
@@ -175,12 +176,6 @@ public sealed class WttContentLoader(
         ArmoryPaths paths,
         bool contentBackportDetected)
     {
-        if (contentBackportDetected)
-        {
-            await wtt.CustomItemServiceExtended.CreateCustomItems(assembly);
-            return;
-        }
-
         var stagingDirectory = Path.Combine(
             Path.GetTempPath(),
             $"SalcosArmory-items-{Environment.ProcessId}-{Guid.NewGuid():N}");
@@ -191,19 +186,31 @@ public sealed class WttContentLoader(
         {
             var copied = 0;
             var skipped = 0;
+            var balanced = 0;
 
             foreach (var file in Files.EnumerateJson(paths.CustomItems))
             {
-                if (ContainsContentBackportDependentItem(file))
+                if (!contentBackportDetected && ContainsContentBackportDependentItem(file))
                 {
                     skipped++;
                     continue;
                 }
 
+                var relativePath = Path.GetRelativePath(paths.CustomItems, file).Replace('\\', '/');
                 var destination = Path.Combine(
                     stagingDirectory,
                     $"{copied:D4}_{Path.GetFileName(file)}");
-                File.Copy(file, destination, overwrite: true);
+
+                if (softArmorBalanceService.TryTransform(file, relativePath, out var transformedJson))
+                {
+                    await File.WriteAllTextAsync(destination, transformedJson);
+                    balanced++;
+                }
+                else
+                {
+                    File.Copy(file, destination, overwrite: true);
+                }
+
                 copied++;
             }
 
@@ -213,9 +220,18 @@ public sealed class WttContentLoader(
                     "No independent custom-item configuration remained after Content Backport filtering.");
             }
 
-            logger.Info(Log.Line(
-                $"Content Backport filter skipped {skipped} dependent item config(s); " +
-                $"loading {copied} independent config(s)."));
+            if (!contentBackportDetected)
+            {
+                logger.Info(Log.Line(
+                    $"Content Backport filter skipped {skipped} dependent item config(s); " +
+                    $"loading {copied} independent config(s)."));
+            }
+
+            if (softArmorBalanceService.Enabled)
+            {
+                logger.Info(Log.Line(
+                    $"Soft armor insert rebalance transformed {balanced} item config(s)."));
+            }
 
             await wtt.CustomItemServiceExtended.CreateCustomItems(assembly, stagingDirectory);
         }

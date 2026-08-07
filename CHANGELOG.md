@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.6.1
+
+- Added a narrowly scoped compatibility bridge for SVM custom PMC and Scav pockets.
+- Registers only the active SVM custom-pocket templates before SPT runs `InvalidPocketFix`, preventing equipped Special Slot items from being moved to the sorting table during server startup.
+- Leaves installations without SVM, as well as SVM presets with custom pockets disabled, completely unchanged.
+- Allows SVM to overwrite the temporary bridge templates with its fully configured pocket definitions during its normal initialization.
+
+## 0.6.0
+
+- Added the E.F.-1 "REDLINE" Entry Fragger combat stimulant, sold by Wayland at loyalty level 4.
+- REDLINE raises maximum health across all seven body parts by 15% for 45 seconds while preserving each part's current health percentage.
+- Blacked-out body parts remain blacked out, the health buffer cannot stack or refresh, and expiry only clamps excess health instead of inflicting direct damage.
+- Added a severe 120-second post-effect crash with reduced maximum stamina, impaired stamina recovery, hand tremors, tunnel vision and accelerated energy/hydration loss.
+- Added safe cleanup when the duration expires, the player dies, the raid ends or the client plugin unloads.
+- Updated B.O.N.E.'s medical-effect field lookup for the public SPT 4.1.2 member names while retaining compatibility fallbacks.
+
+## 0.5.1
+
+- Reworked all removable Soft Armor Inserts into distinct class roles instead of direct durability upgrades.
+- Class 3 inserts are now light, durable and inexpensive, while Class 6 inserts offer extreme protection at the cost of weight, mobility, durability and price.
+- Added position-scaled durability, weight, movement penalties and prices for front, back, side, groin, shoulder and collar inserts.
+- Reduced high-class insert availability through lower static-loot weights and stricter Wayland purchase limits.
+- Added a one-time profile migration that preserves the wear percentage of already-owned inserts while applying their new maximum durability.
+- Added the documented `config/soft_armor_balance.jsonc` file so every balance value can be customized or the rebalance can be disabled.
+- Soft Armor balancing is applied before WTT CommonLib creates the items, preserving CommonLib as the content-loading implementation.
+
 ## 0.5.0
 
 - Expanded the player Pockets equipment from three to six Special Slots, displayed as two rows of three.

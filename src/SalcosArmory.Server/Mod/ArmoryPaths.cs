@@ -69,6 +69,7 @@ public sealed record ArmoryPaths(
 
     public string WaylandBaseFile => Path.Combine(Database, "traders", "wayland", "base.json");
     public string WaylandPortraitFile => Path.Combine(Resources, "wayland.png");
+    public string SoftArmorBalanceFile => Path.Combine(Config, "soft_armor_balance.jsonc");
 
     public string WaylandConfigFile
     {

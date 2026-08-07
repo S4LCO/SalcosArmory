@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using SalcosArmory.Config;
+using SalcosArmory.Content;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
@@ -20,6 +21,7 @@ public sealed class WaylandTraderService(
     TemplateTable templateTable,
     TradersTable tradersTable,
     LocaleTable localeTable,
+    SoftArmorBalanceService softArmorBalanceService,
     ISptLogger<WaylandTraderService> logger
 )
 {
@@ -122,7 +124,7 @@ public sealed class WaylandTraderService(
             }
 
             var loyaltyLevel = ResolveLoyaltyLevel(entry, category, itemOverride);
-            var stock = Math.Max(1, itemOverride?.Stock ?? category.Stock);
+            var stock = Math.Max(1, itemOverride?.Stock ?? entry.BalancedStock ?? category.Stock);
             var price = ResolvePrice(entry, settings, itemOverride);
             MongoId offerId = CreateOfferId(entry.TemplateId);
 
@@ -157,7 +159,7 @@ public sealed class WaylandTraderService(
         return assort;
     }
 
-    private static IEnumerable<CatalogEntry> ReadCatalog(string customItemsPath)
+    private IEnumerable<CatalogEntry> ReadCatalog(string customItemsPath)
     {
         foreach (var file in Files.EnumerateJson(customItemsPath))
         {
@@ -179,13 +181,26 @@ public sealed class WaylandTraderService(
 
                 var handbookPrice = ReadNumber(itemProperty.Value, "handbookPriceRoubles");
                 var fleaPrice = ReadNumber(itemProperty.Value, "fleaPriceRoubles");
+                int? balancedStock = null;
+
+                if (softArmorBalanceService.TryResolveOffer(
+                        relativePath,
+                        out var balancedHandbookPrice,
+                        out var balancedFleaPrice,
+                        out var waylandStock))
+                {
+                    handbookPrice = balancedHandbookPrice;
+                    fleaPrice = balancedFleaPrice;
+                    balancedStock = waylandStock;
+                }
 
                 yield return new CatalogEntry(
                     itemProperty.Name,
                     category,
                     relativePath,
                     handbookPrice,
-                    fleaPrice);
+                    fleaPrice,
+                    balancedStock);
             }
         }
     }
@@ -346,5 +361,6 @@ public sealed class WaylandTraderService(
         string Category,
         string RelativePath,
         int HandbookPrice,
-        int FleaPrice);
+        int FleaPrice,
+        int? BalancedStock);
 }

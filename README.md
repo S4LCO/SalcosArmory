@@ -11,6 +11,10 @@ Starting with version 0.4.0, **Wayland** serves as SALCO's ARMORY's dedicated tr
 
 Starting with version 0.5.0, player Pockets provide six Special Slots arranged in two rows of three. Wayland also sells a compact **Field Armor Repair Kit** that can repair damaged body armor and ballistic plates during a raid.
 
+Starting with version 0.5.1, removable Soft Armor Inserts use distinct class roles. Lower classes favor mobility, durability and affordability, while higher classes trade weight, handling, repair cost and availability for stronger ballistic and blunt-impact protection. The complete system can be adjusted or disabled in `config/soft_armor_balance.jsonc`.
+
+Starting with version 0.6.0, the **E.F.-1 "REDLINE"** Entry Fragger stimulant grants a 15% maximum-health buffer for 45 seconds. It cannot revive blacked-out limbs or stack with itself, and its short assault window is followed by a severe stamina, vision and metabolic crash.
+
 The mod is not final. Expect changes at any time.
 
 ---
@@ -76,6 +80,15 @@ Then close the game and the server.
 - Repeated treatments are possible, but their maximum-health penalties compound.
 - B.O.N.E. cannot revive a dead player, and no other stim or surgical kit receives this ability.
 
+**E.F.-1 "REDLINE"**
+
+- Temporarily raises maximum health on all seven body parts by 15% for 45 seconds.
+- Preserves the current health percentage on activation and never restores blacked-out body parts.
+- Does not stack or refresh if another REDLINE is used while the buffer is active.
+- Removes only excess temporary health when the buffer ends; expiry does not deal direct damage.
+- Triggers a severe 120-second crash affecting stamina, hand stability, vision, energy and hydration.
+- Sold by Wayland at loyalty level 4 with a limit of one injector per restock.
+
 **EXTENDED SPECIAL SLOTS AND FIELD REPAIR**
 
 - Expands the three vanilla Special Slots to six, arranged in two rows of three.
@@ -84,6 +97,8 @@ Then close the game and the server.
 - A repair window opened with FARK uses only that carried kit; trader repair and other repair kits are unavailable in this field-repair flow.
 - The field kit contains 400 repair points and weighs 6 kg.
 - Only the SALCO field kit receives in-raid repair access; the vanilla armor and weapon repair kits remain unchanged.
+- When SVM custom pockets are active, SALCO registers their known templates before SPT's profile migration so equipped Special Slot items remain in place across server restarts.
+- Installations without SVM and SVM presets without custom pockets are not modified by this compatibility bridge.
 
 **SALCO'S COUNTERMEASURE PROTOCOL**
 
@@ -118,6 +133,7 @@ For configuration and compatibility details, see `docs/COUNTERMEASURE_PROTOCOL.m
 - SALCO's ARMORY: MSJ6 carry and escape stimulant injector
 - SALCO's ARMORY: D.I.N.N.E.R-41 stimulant injector
 - SALCO's ARMORY: B.O.N.E. stimulant injector
+- SALCO's ARMORY: E.F.-1 "REDLINE" combat stimulant injector
 - SALCO's ARMORY: UFAK first aid kit
 - SALCO's ARMORY: Surv12 field surgical kit  
 - SALCO's ARMORY: Field Armor Repair Kit
