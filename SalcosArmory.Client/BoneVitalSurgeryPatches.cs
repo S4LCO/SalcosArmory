@@ -58,14 +58,11 @@ internal sealed class BoneVitalRestorePatch : ModulePatch
             instructions.RemoveRange(index, guardLength);
             instructions.InsertRange(index, replacement);
             BoneVitalSurgery.MarkRestorePatchReady(true);
-            MedicalMergePlugin.Log.LogInfo(
-                "B.O.N.E. vital-surgery guard installed for head and chest."
-            );
             return instructions;
         }
 
         BoneVitalSurgery.MarkRestorePatchReady(false);
-        MedicalMergePlugin.Log.LogError(
+        SalcosArmoryPlugin.Log.LogError(
             "B.O.N.E. vital surgery was disabled: the expected game method was not found. "
             + "Runtime IL begins with: "
             + string.Join(", ", instructions.Take(12).Select(instruction => instruction.opcode.Name))
@@ -136,7 +133,7 @@ internal sealed class BoneVitalBodyPartSelectionPatch : ModulePatch
 
         damagedBodyPart = vitalPart;
         __result = true;
-        MedicalMergePlugin.Log.LogInfo(
+        SalcosArmoryPlugin.Log.LogInfo(
             $"B.O.N.E. selected blacked-out {vitalPart} for vital surgery."
         );
     }

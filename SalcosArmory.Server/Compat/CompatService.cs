@@ -14,7 +14,7 @@ public sealed class CompatService(
     ISptLogger<CompatService> logger
 )
 {
-    public async Task<ModuleResult> LoadAsync(ArmoryPaths paths)
+    public async Task<ModuleResult> LoadAsync(ArmoryPaths paths, bool logDetails)
     {
         var files = Files.EnumerateJson(paths.CompatItems)
             .Concat(Files.EnumerateJson(paths.CompatWeapons))
@@ -38,7 +38,7 @@ public sealed class CompatService(
             if (set.Rules.Count == 0)
             {
                 skippedFiles++;
-                logger.Info(Log.Line($"Compat: {fileName} has no rules."));
+                WriteDetails($"Compat: {fileName} has no rules.");
                 continue;
             }
 
@@ -51,7 +51,7 @@ public sealed class CompatService(
             if (rules.Count == 0)
             {
                 skippedFiles++;
-                logger.Info(Log.Line($"Compat: {fileName} has no usable rules."));
+                WriteDetails($"Compat: {fileName} has no usable rules.");
                 continue;
             }
 
@@ -105,9 +105,17 @@ public sealed class CompatService(
             $"SpecialSlotsMatched={report.SpecialSlotsMatched}, SpecialSlotsPatched={report.SpecialSlotsPatched}, " +
             $"Warnings={warnings}.";
 
-        logger.Info(Log.Line($"Compat: {message}"));
+        WriteDetails($"Compat: {message}");
 
         return ModuleResult.Ok("Compat", message);
+
+        void WriteDetails(string detail)
+        {
+            if (logDetails)
+            {
+                logger.Info(Log.Line(detail));
+            }
+        }
     }
 
     private static void CountMissingAllowedTemplates(

@@ -10,7 +10,10 @@ public sealed class StimBuffService(
     ISptLogger<StimBuffService> logger
 )
 {
-    public async Task<ModuleResult> LoadAsync(Assembly assembly, ArmoryPaths paths)
+    public async Task<ModuleResult> LoadAsync(
+        Assembly assembly,
+        ArmoryPaths paths,
+        bool logDetails)
     {
         var files = GetBuffFiles(paths.CustomBuffs);
 
@@ -35,9 +38,13 @@ public sealed class StimBuffService(
             stimKeys += check.StimKeys;
             buffEntries += check.BuffEntries;
 
-            logger.Info(Log.Line(
-                $"Buffs: {Path.GetFileName(file)} OK ({check.StimKeys} stim key(s), {check.BuffEntries} buff entries)."
-            ));
+            if (logDetails)
+            {
+                logger.Info(Log.Line(
+                    $"Buffs: {Path.GetFileName(file)} OK " +
+                    $"({check.StimKeys} stim key(s), {check.BuffEntries} buff entries)."
+                ));
+            }
         }
 
         var relativePath = Path.GetRelativePath(paths.Root, paths.CustomBuffs);

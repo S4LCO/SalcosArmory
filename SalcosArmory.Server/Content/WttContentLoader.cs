@@ -52,10 +52,10 @@ public sealed class WttContentLoader(
 
         if (_hasDeferredContentBackportItems)
         {
-            logger.Info(Log.Line(
+            LogDetails(settings.Debug,
                 $"Deferring {_deferredContentBackportConfigCount} Content Backport-dependent item config(s) " +
                 "until Content Backport has registered its templates."
-            ));
+            );
         }
 
         loaded += await Run("Custom items", settings.LoadItems, paths.CustomItems,
@@ -64,7 +64,8 @@ public sealed class WttContentLoader(
                 paths,
                 contentBackportDetected
                     ? CustomItemSelection.All
-                    : CustomItemSelection.IndependentOnly));
+                    : CustomItemSelection.IndependentOnly,
+                settings.Debug));
 
         loaded += await Run("Weapon presets", settings.LoadWeaponPresets, paths.CustomWeaponPresets,
             () => wtt.CustomWeaponPresetService.CreateCustomWeaponPresets(assembly));
@@ -104,19 +105,19 @@ public sealed class WttContentLoader(
             if (!enabled)
             {
                 skipped++;
-                logger.Info(Log.Line($"{name}: disabled."));
+                LogDetails(settings.Debug, $"{name}: disabled.");
                 return 0;
             }
 
             if (!Files.HasJson(folder))
             {
                 skipped++;
-                logger.Info(Log.Line($"{name}: no JSON files."));
+                LogDetails(settings.Debug, $"{name}: no JSON files.");
                 return 0;
             }
 
             await action();
-            logger.Info(Log.Line($"{name}: registered."));
+            LogDetails(settings.Debug, $"{name}: registered.");
             return 1;
         }
 
@@ -124,19 +125,15 @@ public sealed class WttContentLoader(
         {
             if (!settings.LoadBuffs)
             {
-                logger.Info(Log.Line("Buffs: disabled."));
+                LogDetails(settings.Debug, "Buffs: disabled.");
                 return ModuleResult.Skipped("Buffs", "Disabled in settings.");
             }
 
-            var result = await stimBuffService.LoadAsync(assembly, paths);
+            var result = await stimBuffService.LoadAsync(assembly, paths, settings.Debug);
 
-            if (result.IsSkipped)
+            if (result.Success)
             {
-                logger.Info(Log.Line($"Buffs: {result.Message}"));
-            }
-            else if (result.Success)
-            {
-                logger.Info(Log.Line($"Buffs: {result.Message}"));
+                LogDetails(settings.Debug, $"Buffs: {result.Message}");
             }
 
             return result;
@@ -173,7 +170,11 @@ public sealed class WttContentLoader(
                 $"Content Backport is unavailable; skipped {_deferredContentBackportConfigCount} dependent item config(s).");
         }
 
-        await LoadCustomItems(assembly, paths, CustomItemSelection.ContentBackportOnly);
+        await LoadCustomItems(
+            assembly,
+            paths,
+            CustomItemSelection.ContentBackportOnly,
+            settings.Debug);
         _hasDeferredContentBackportItems = false;
 
         return ModuleResult.Ok(
@@ -184,7 +185,8 @@ public sealed class WttContentLoader(
     private async Task LoadCustomItems(
         Assembly assembly,
         ArmoryPaths paths,
-        CustomItemSelection selection)
+        CustomItemSelection selection,
+        bool logDetails)
     {
         var stagingDirectory = Path.Combine(
             Path.GetTempPath(),
@@ -228,26 +230,26 @@ public sealed class WttContentLoader(
 
             if (copied == 0)
             {
-                logger.Info(Log.Line($"Custom item phase {selection}: no matching JSON files."));
+                LogDetails(logDetails, $"Custom item phase {selection}: no matching JSON files.");
                 return;
             }
 
             if (selection == CustomItemSelection.IndependentOnly && skipped > 0)
             {
-                logger.Info(Log.Line(
+                LogDetails(logDetails,
                     $"Content Backport staging deferred {skipped} dependent item config(s); " +
-                    $"loading {copied} independent config(s)."));
+                    $"loading {copied} independent config(s).");
             }
             else if (selection == CustomItemSelection.ContentBackportOnly)
             {
-                logger.Info(Log.Line(
-                    $"Content Backport staging is loading {copied} deferred item config(s)."));
+                LogDetails(logDetails,
+                    $"Content Backport staging is loading {copied} deferred item config(s).");
             }
 
             if (softArmorBalanceService.Enabled)
             {
-                logger.Info(Log.Line(
-                    $"Soft armor insert rebalance transformed {balanced} item config(s)."));
+                LogDetails(logDetails,
+                    $"Soft armor insert rebalance transformed {balanced} item config(s).");
             }
 
             await wtt.CustomItemServiceExtended.CreateCustomItems(assembly, stagingDirectory);
@@ -269,6 +271,14 @@ public sealed class WttContentLoader(
     private bool AreContentBackportTemplatesAvailable()
     {
         return ContentBackportProbeTemplates.All(templateTable.Items.ContainsKey);
+    }
+
+    private void LogDetails(bool enabled, string message)
+    {
+        if (enabled)
+        {
+            logger.Info(Log.Line(message));
+        }
     }
 
     private static bool ContainsContentBackportDependentItem(string file)

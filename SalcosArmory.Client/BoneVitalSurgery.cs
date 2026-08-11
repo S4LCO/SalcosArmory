@@ -75,7 +75,7 @@ internal static class BoneVitalSurgery
         }
 
         treatment.Consumed = true;
-        MedicalMergePlugin.Log.LogInfo(
+        SalcosArmoryPlugin.Log.LogInfo(
             $"B.O.N.E. authorized vital surgery for {bodyPart}."
         );
         return true;

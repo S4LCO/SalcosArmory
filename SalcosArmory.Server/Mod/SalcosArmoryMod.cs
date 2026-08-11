@@ -41,7 +41,7 @@ public sealed class SalcosArmoryMod(
 
         if (settings.LoadCompat)
         {
-            results.Add(await compatService.LoadAsync(paths));
+            results.Add(await compatService.LoadAsync(paths, settings.Debug));
         }
         else
         {
@@ -73,16 +73,7 @@ public sealed class SalcosArmoryMod(
             results.Add(ModuleResult.Skipped("Countermeasure Protocol", "Disabled in settings."));
         }
 
-        foreach (var result in results)
-        {
-            var state = result.Success ? result.IsSkipped ? "SKIP" : "OK" : "FAIL";
-            logger.Info(Log.Line($"{result.Name}: {state} - {result.Message}"));
-
-            if (!result.Success && settings.StrictMode)
-            {
-                throw new InvalidOperationException($"{ArmoryInfo.DisplayName} stopped during {result.Name}: {result.Message}");
-            }
-        }
+        StartupReporter.Report(logger, results, settings);
 
         logger.Success(Log.Line("Loaded."));
     }

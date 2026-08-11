@@ -50,7 +50,7 @@ internal static class RedlineEffect
 
         if (_active && ReferenceEquals(controller, _controller))
         {
-            MedicalMergePlugin.Log.LogWarning(
+            SalcosArmoryPlugin.Log.LogWarning(
                 "E.F.-1 REDLINE was used while its health buffer was already active. "
                 + "The buffer does not stack or refresh."
             );
@@ -110,7 +110,7 @@ internal static class RedlineEffect
             _expiresAt = Time.realtimeSinceStartup + DurationSeconds;
             _active = true;
 
-            MedicalMergePlugin.Log.LogInfo(
+            SalcosArmoryPlugin.Log.LogInfo(
                 $"E.F.-1 REDLINE health buffer activated: +{HealthBonusFraction:P0} maximum health "
                 + $"for {DurationSeconds:0} seconds."
             );
@@ -120,7 +120,7 @@ internal static class RedlineEffect
             _controller = controller;
             _active = OriginalMaximums.Count > 0;
             Restore("activation failed");
-            MedicalMergePlugin.Log.LogError($"E.F.-1 REDLINE activation failed: {ex}");
+            SalcosArmoryPlugin.Log.LogError($"E.F.-1 REDLINE activation failed: {ex}");
         }
     }
 
@@ -185,7 +185,7 @@ internal static class RedlineEffect
                 }
                 catch (Exception ex)
                 {
-                    MedicalMergePlugin.Log.LogWarning(
+                    SalcosArmoryPlugin.Log.LogWarning(
                         $"E.F.-1 REDLINE could not sync {entry.Key} while restoring health: {ex.Message}"
                     );
                 }
@@ -201,7 +201,7 @@ internal static class RedlineEffect
 
         if (restoredParts > 0)
         {
-            MedicalMergePlugin.Log.LogInfo(
+            SalcosArmoryPlugin.Log.LogInfo(
                 $"E.F.-1 REDLINE health buffer removed ({reason}); restored {restoredParts} body parts."
             );
         }

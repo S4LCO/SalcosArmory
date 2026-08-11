@@ -179,7 +179,7 @@ internal sealed class MedicalMergeIsInteractivePatch : ModulePatch
         }
         catch (Exception ex)
         {
-            MedicalMergePlugin.Log.LogWarning($"Medical merge interaction check failed: {ex.Message}");
+            SalcosArmoryPlugin.Log.LogWarning($"Medical merge interaction check failed: {ex.Message}");
             return fallback;
         }
     }

@@ -89,7 +89,7 @@ internal sealed class MedicalMergeResult : ISyncOperationResult, ITransferOrMerg
 
         if (rollback.Failed)
         {
-            MedicalMergePlugin.Log.LogWarning($"Medical merge rollback failed: {rollback.Error}");
+            SalcosArmoryPlugin.Log.LogWarning($"Medical merge rollback failed: {rollback.Error}");
         }
     }
 

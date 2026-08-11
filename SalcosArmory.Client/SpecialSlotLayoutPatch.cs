@@ -48,7 +48,7 @@ internal sealed class SpecialSlotLayoutPatch : ModulePatch
             }
 
             _layoutFailureLogged = true;
-            MedicalMergePlugin.Log.LogError(
+            SalcosArmoryPlugin.Log.LogError(
                 $"Extended Special Slots could not apply the 3x2 layout: {ex}");
         }
     }

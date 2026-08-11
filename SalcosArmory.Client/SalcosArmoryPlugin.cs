@@ -11,7 +11,7 @@ using SalcosArmory.Client.VitalSurgery;
 namespace SalcosArmory.Client;
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-internal sealed class MedicalMergePlugin : BaseUnityPlugin
+internal sealed class SalcosArmoryPlugin : BaseUnityPlugin
 {
     private const string PluginGuid = "com.salco.salcosarmory";
     private const string PluginName = "SALCO's ARMORY Client";
@@ -59,7 +59,6 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
         try
         {
             new RedlineMedEffectPatch().Enable();
-            Log.LogInfo("E.F.-1 REDLINE temporary maximum-health effect enabled.");
         }
         catch (System.Exception ex)
         {
@@ -73,7 +72,6 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
         {
             new FieldArmorRepairPatch().Enable();
             new FieldArmorRepairersPatch().Enable();
-            Log.LogInfo("Field Armor Repair Kit raid interaction enabled.");
         }
         catch (System.Exception ex)
         {
@@ -85,14 +83,12 @@ internal sealed class MedicalMergePlugin : BaseUnityPlugin
     {
         if (!SpecialSlotFeatureSettings.Enabled)
         {
-            Log.LogInfo("Extended Special Slots 3x2 layout disabled in settings.");
             return;
         }
 
         try
         {
             new SpecialSlotLayoutPatch().Enable();
-            Log.LogInfo("Extended Special Slots 3x2 layout enabled.");
         }
         catch (System.Exception ex)
         {

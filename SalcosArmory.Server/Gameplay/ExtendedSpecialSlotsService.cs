@@ -42,7 +42,6 @@ public sealed class ExtendedSpecialSlotsService(
                 ? $"All {pocketTemplates.Length} compatible Pockets template(s) already contain six special slots."
                 : $"Added {addedSlots} special slot(s) across {pocketTemplates.Length} compatible Pockets template(s).";
 
-            logger.Info(Log.Line($"{ModuleName}: {message}"));
             return ModuleResult.Ok(ModuleName, message);
         }
         catch (Exception ex)

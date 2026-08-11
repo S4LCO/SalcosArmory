@@ -28,18 +28,19 @@ public sealed class SoftArmorBalanceService(ISptLogger<SoftArmorBalanceService> 
 
     public bool HasRegisteredTemplates => _maxDurabilityByTemplateId.Count > 0;
 
-    public void Configure(SoftArmorBalanceSettings settings)
+    public void Configure(SoftArmorBalanceSettings settings, bool logDetails)
     {
         _settings = settings;
 
-        if (!_settings.Enabled)
+        if (!logDetails)
         {
-            logger.Info(Log.Line("Soft armor insert rebalance is disabled."));
             return;
         }
 
-        logger.Info(Log.Line(
-            $"Soft armor insert rebalance configured for {_settings.Classes.Count} class tier(s)."));
+        var message = _settings.Enabled
+            ? $"Soft armor insert rebalance configured for {_settings.Classes.Count} class tier(s)."
+            : "Soft armor insert rebalance is disabled.";
+        logger.Info(Log.Line(message));
     }
 
     public bool TryTransform(string filePath, string relativePath, out string transformedJson)

@@ -38,7 +38,7 @@ internal static class StimTextureCatalog
 
         if (textureDirectory == null || !Directory.Exists(textureDirectory))
         {
-            MedicalMergePlugin.Log.LogError(
+            SalcosArmoryPlugin.Log.LogError(
                 $"Stim texture folder was not found: {textureDirectory ?? "<unknown>"}"
             );
             return false;
@@ -47,7 +47,7 @@ internal static class StimTextureCatalog
         _loadImageMethod = ResolveLoadImageMethod();
         if (_loadImageMethod == null)
         {
-            MedicalMergePlugin.Log.LogError(
+            SalcosArmoryPlugin.Log.LogError(
                 "Unity's PNG loader could not be found. Custom stimulant hand textures cannot be loaded."
             );
             return false;
@@ -58,9 +58,6 @@ internal static class StimTextureCatalog
             LoadTexture(textureDirectory, textureFile.Key, textureFile.Value);
         }
 
-        MedicalMergePlugin.Log.LogInfo(
-            $"Loaded {Textures.Count}/{TextureFiles.Count} custom stimulant hand textures."
-        );
         return Textures.Count > 0;
     }
 
@@ -77,7 +74,7 @@ internal static class StimTextureCatalog
         var path = Path.Combine(directory, fileName);
         if (!File.Exists(path))
         {
-            MedicalMergePlugin.Log.LogWarning(
+            SalcosArmoryPlugin.Log.LogWarning(
                 $"Stim hand texture is missing for {templateId}: {path}"
             );
             return;
@@ -113,7 +110,7 @@ internal static class StimTextureCatalog
                 UnityEngine.Object.Destroy(texture);
             }
 
-            MedicalMergePlugin.Log.LogError(
+            SalcosArmoryPlugin.Log.LogError(
                 $"Stim hand texture could not be loaded from '{path}': {ex.Message}"
             );
         }

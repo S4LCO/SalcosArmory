@@ -57,7 +57,7 @@ internal sealed class RedlineMedEffectPatch : ModulePatch
         }
         catch (Exception ex)
         {
-            MedicalMergePlugin.Log.LogError($"E.F.-1 REDLINE use detection failed: {ex}");
+            SalcosArmoryPlugin.Log.LogError($"E.F.-1 REDLINE use detection failed: {ex}");
         }
     }
 

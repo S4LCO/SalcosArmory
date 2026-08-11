@@ -34,7 +34,7 @@ internal static class SpecialSlotFeatureSettings
             }
             catch (Exception exception)
             {
-                MedicalMergePlugin.Log.LogWarning(
+                SalcosArmoryPlugin.Log.LogWarning(
                     $"Could not read the Extended Special Slots setting; keeping the layout enabled: {exception.Message}"
                 );
                 return true;

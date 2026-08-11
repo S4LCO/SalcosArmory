@@ -75,7 +75,7 @@ internal static class MedicalMergeContext
         if (ControllerField?.GetValue(context) is not ItemController controller
             || InventoryField?.GetValue(context) is not Inventory inventory)
         {
-            MedicalMergePlugin.Log.LogWarning("Medical merge is unavailable because the inventory context could not be resolved.");
+            SalcosArmoryPlugin.Log.LogWarning("Medical merge is unavailable because the inventory context could not be resolved.");
             return false;
         }
 
@@ -110,7 +110,7 @@ internal static class MedicalMergeContext
         var result = MedicalMergeInteraction.TryMerge(source, target, 0f, itemController, true);
         if (result.Failed)
         {
-            MedicalMergePlugin.Log.LogWarning($"Medical merge could not start: {result.Error}");
+            SalcosArmoryPlugin.Log.LogWarning($"Medical merge could not start: {result.Error}");
             return;
         }
 

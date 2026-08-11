@@ -37,7 +37,10 @@ public sealed class CountermeasureProtocolService(
                 $"MaximumMeasures={settings.MaximumCountermeasuresPerBot}. " +
                 $"Patches(start/end/inventory)={startEnabled}/{endEnabled}/{inventoryEnabled}.";
 
-            logger.Info(Log.Line($"Countermeasure Protocol: {message}"));
+            if (globalDebugLogging || settings.DebugLogging)
+            {
+                logger.Info(Log.Line($"Countermeasure Protocol: {message}"));
+            }
             return ModuleResult.Ok("Countermeasure Protocol", message);
         }
         catch (Exception ex)

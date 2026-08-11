@@ -39,7 +39,7 @@ public sealed class SalcosArmoryDependencyLoad(
             Assembly.GetExecutingAssembly(),
             paths,
             settings);
-        LogResult(contentResult, settings);
+        StartupReporter.Report(logger, contentResult, settings);
 
         if (contentResult.Success
             && !contentResult.IsSkipped
@@ -48,19 +48,7 @@ public sealed class SalcosArmoryDependencyLoad(
         {
             var waylandSettings = await settingsLoader.LoadWaylandAsync(paths.WaylandConfigFile);
             var waylandResult = waylandTraderService.Load(paths, waylandSettings);
-            LogResult(waylandResult, settings);
-        }
-    }
-
-    private void LogResult(ModuleResult result, ArmorySettings settings)
-    {
-        var state = result.Success ? result.IsSkipped ? "SKIP" : "OK" : "FAIL";
-        logger.Info(Log.Line($"{result.Name}: {state} - {result.Message}"));
-
-        if (!result.Success && settings.StrictMode)
-        {
-            throw new InvalidOperationException(
-                $"{ArmoryInfo.DisplayName} stopped during {result.Name}: {result.Message}");
+            StartupReporter.Report(logger, waylandResult, settings);
         }
     }
 }

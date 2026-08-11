@@ -49,9 +49,9 @@ public sealed class SalcosArmoryPreload(
 
         var softArmorBalance = await settingsLoader.LoadSoftArmorBalanceAsync(
             paths.SoftArmorBalanceFile);
-        softArmorBalanceService.Configure(softArmorBalance);
+        softArmorBalanceService.Configure(softArmorBalance, settings.Debug);
 
-        logger.Info(Log.Line($"Starting {ArmoryInfo.DisplayName} {ArmoryInfo.Version} preload."));
+        logger.Info(Log.Line($"Loading {ArmoryInfo.DisplayName} {ArmoryInfo.Version}..."));
 
         var results = new List<ModuleResult>
         {
@@ -85,19 +85,8 @@ public sealed class SalcosArmoryPreload(
                     : "Disabled in settings."));
         }
 
-        foreach (var result in results)
-        {
-            var state = result.Success ? result.IsSkipped ? "SKIP" : "OK" : "FAIL";
-            logger.Info(Log.Line($"{result.Name}: {state} - {result.Message}"));
-
-            if (!result.Success && settings.StrictMode)
-            {
-                throw new InvalidOperationException(
-                    $"{ArmoryInfo.DisplayName} stopped during {result.Name}: {result.Message}");
-            }
-        }
+        StartupReporter.Report(logger, results, settings);
 
         _loaded = true;
-        logger.Info(Log.Line("Preload complete; custom item templates are ready for profile migration."));
     }
 }

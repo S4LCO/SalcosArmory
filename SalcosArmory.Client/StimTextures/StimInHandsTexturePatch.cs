@@ -54,7 +54,7 @@ internal sealed class StimInHandsTexturePatch : ModulePatch
             }
 
             _runtimeErrorLogged = true;
-            MedicalMergePlugin.Log.LogError(
+            SalcosArmoryPlugin.Log.LogError(
                 $"A stimulant hand texture could not be applied: {ex}"
             );
         }
