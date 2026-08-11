@@ -1,0 +1,15 @@
+{
+  "loadItems": true,
+  "loadWeaponPresets": true,
+  "loadHideoutRecipes": true,
+  "loadLocales": true,
+  "loadBuffs": true,
+  "loadCompat": true,
+  "loadRuntimeInjection": true,
+  "loadMedicalMerge": true,
+  "loadCountermeasureProtocol": true,
+  "loadWaylandTrader": true,
+  "loadExtendedSpecialSlots": true,
+  "debug": false,
+  "strictMode": false
+}

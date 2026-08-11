@@ -1,0 +1,64 @@
+{
+  "manifest": [
+    {
+      "key": "buttstock_fab_defense_gl_core_cheekriser.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "buttstock_fab_defense_gl_core_cheekriser_fde.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "buttstock_fab_defense_gl_core_cheekriser_od.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "frontgrip_imi_defense_fsg2.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "frontgrip_imi_defense_fsg2_fde.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "frontgrip_imi_defense_fsg2_od.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc1u020_mlok.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc1u020_mlok_fde.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc1u020_mlok_od.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc_1u004b_mlok.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc_1u004b_mlok_fde.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "handguard_kpyk_crc_1u004b_mlok_od_green.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "opticmount_kpyk_crc_2u073.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "opticmount_kpyk_crc_2u073_fde.bundle",
+      "dependencyKeys": ["shaders"]
+    },
+    {
+      "key": "opticmount_kpyk_crc_2u073_od.bundle",
+      "dependencyKeys": ["shaders"]
+    }
+  ]
+}

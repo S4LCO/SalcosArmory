@@ -1,0 +1,31 @@
+{
+  "6a80f1e1d5a1c0de00000001": {
+    "itemTplToClone": "591094e086f7747caa7bb2ef",
+    "parentId": "616eb7aea207f41933308f46",
+    "handbookParentId": "5b47574386f77428ca22b345",
+    "overrideProperties": {
+      "BackgroundColor": "red",
+      "CanRequireOnRagfair": false,
+      "CanSellOnRagfair": true,
+      "ExaminedByDefault": true,
+      "MaxRepairResource": 400,
+      "Name": "salco_field_armor_repair_kit",
+      "RarityPvE": "Superrare",
+      "Weight": 6
+    },
+    "locales": {
+      "en": {
+        "name": "SALCO's ARMORY: Field Armor Repair Kit",
+        "shortName": "SA: Field ARK",
+        "description": "A compact armor maintenance kit prepared by Wayland for emergency field repairs. It can repair body armor and ballistic plates during a raid, but carries fewer supplies than a full workshop kit. Drag the kit onto damaged armor or a damaged plate to use it."
+      }
+    },
+    "fleaPriceRoubles": 425000,
+    "handbookPriceRoubles": 300000,
+    "addtoBots": false,
+    "addtoSpecialSlots": true,
+    "addtoModSlots": false,
+    "addtoStaticLootContainers": false,
+    "addtoTraders": false
+  }
+}

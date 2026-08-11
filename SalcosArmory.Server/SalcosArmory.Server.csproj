@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>SalcosArmory</RootNamespace>
+    <AssemblyName>SalcosArmory</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <Version>0.6.2</Version>
+
+    <OutputPath>bin\$(Configuration)\SalcosArmory\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+    <!-- We copy our mod folders ourselves, so the SDK should not include content twice. -->
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SPTarkov.Common" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.DI" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Reflection" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Server.Core" Version="4.1.2" />
+    <!-- Build against the SPT 4.1 CommonLib release line. -->
+    <PackageReference Include="WTT-ServerCommonLib" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bundles.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="config\**\*.json;config\**\*.jsonc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="db\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="bundles\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

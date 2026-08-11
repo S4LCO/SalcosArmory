@@ -1,0 +1,137 @@
+{
+  // ===========================================================================
+  // SALCO'S ARMORY - COUNTERMEASURE PROTOCOL
+  // ===========================================================================
+  // Countermeasure Protocol (CP) analyzes your recent completed PMC raids and
+  // adapts a limited number of enemy PMC loadouts to your playstyle.
+  // Scav raids and map-to-map transfers are not included in the analysis.
+  //
+  // CP only changes equipment. It does not control bot spawns, AI behaviour,
+  // movement, personalities, combat decisions, looting, or extraction logic.
+  //
+  // IMPORTANT:
+  // - Stop the SPT server before editing this file.
+  // - Decimal ratios use values from 0.0 to 1.0 (0.50 = 50%).
+  // - Percentage settings use values from 0 to 100 (25 = 25%).
+  // - Values outside the documented ranges are automatically clamped.
+  // - Invalid JSONC causes CP to use its default settings instead.
+  // - Restart the SPT server after making changes.
+
+  // ---------------------------------------------------------------------------
+  // RAID HISTORY AND LEARNING
+  // ---------------------------------------------------------------------------
+
+  // Number of recent completed PMC raids used for analysis.
+  // Older raids outside this window are forgotten. Range: 3-20.
+  "historySize": 5,
+
+  // CP remains inactive until this many completed PMC raids have been recorded.
+  // This cannot be higher than historySize. Range: 1-historySize.
+  "minimumRaids": 3,
+
+  // Controls how quickly older raids lose importance.
+  // 1.0 = all stored raids have equal weight.
+  // Lower values make CP react more strongly to your newest raids. Range: 0.1-1.0.
+  "historyDecay": 0.75,
+
+  // ---------------------------------------------------------------------------
+  // HOW MANY BOTS ARE AFFECTED
+  // ---------------------------------------------------------------------------
+
+  // Minimum percentage of eligible enemy PMCs that can receive countermeasures
+  // once at least one countermeasure has been activated. Range: 0-100.
+  "minimumAffectedPercent": 25,
+
+  // Maximum percentage of eligible enemy PMCs that can receive countermeasures.
+  // Stronger and more consistent player behaviour moves the result closer to
+  // this value. Must be equal to or higher than minimumAffectedPercent. Range: 0-100.
+  "maximumAffectedPercent": 35,
+
+  // Maximum number of different countermeasures a single affected bot may get.
+  // The bot may receive fewer if the measured pressure is low or suitable items
+  // cannot be added safely. Range: 1-5.
+  "maximumCountermeasuresPerBot": 2,
+
+  // ---------------------------------------------------------------------------
+  // PLAYER-BEHAVIOUR THRESHOLDS
+  // ---------------------------------------------------------------------------
+  // A countermeasure becomes available when the corresponding value from your
+  // recent raid history reaches or exceeds its threshold.
+
+  // Minimum armor class that counts as "heavy armor" for CP's analysis.
+  // Regularly using armor of this class or higher can activate upgraded armor-
+  // piercing ammunition for affected bots. Range: 1-6.
+  "heavyArmorClassThreshold": 4,
+
+  // Required share of night raids before affected bots may receive night vision.
+  // Example: 0.50 means at least 50% weighted night-raiding usage. Range: 0.0-1.0.
+  "nightRaidThreshold": 0.50,
+
+  // Required share of your kills that must be headshots before affected bots may
+  // receive compatible face protection. Range: 0.0-1.0.
+  "headshotRatioThreshold": 0.45,
+
+  // Required weighted average kill distance, in meters, before affected bots may
+  // receive compatible long-range optics. Range: 1-500.
+  "longRangeDistanceThreshold": 80,
+
+  // Required share of raids started with a suppressed weapon before affected bots
+  // may receive hearing protection. Range: 0.0-1.0.
+  "suppressorUsageThreshold": 0.50,
+
+  // Required share of raids started with armor at or above
+  // heavyArmorClassThreshold before affected bots may receive upgraded armor-
+  // piercing ammunition. Range: 0.0-1.0.
+  "heavyArmorUsageThreshold": 0.50,
+
+  // Required survival rate before survival begins adding extra pressure.
+  // Survival does not activate a countermeasure by itself; it can increase the
+  // affected-bot percentage and the number of measures assigned. Range: 0.0-1.0.
+  "survivalRateThreshold": 0.60,
+
+  // ---------------------------------------------------------------------------
+  // EQUIPMENT SAFETY LIMITS
+  // ---------------------------------------------------------------------------
+
+  // Maximum number of attachment steps CP may follow when it needs compatible
+  // mounts or adapters. Higher values improve compatibility but add more work
+  // during bot generation. Recommended: 2-3. Range: 1-4.
+  "maximumAttachmentDepth": 3,
+
+  // Maximum penetration-power increase over a bot's original ammunition.
+  // CP always keeps the original caliber and respects weapon compatibility.
+  // Range: 0-30. Set to 0 to prevent any effective penetration increase.
+  "ammoPenetrationIncrease": 8,
+
+  // Absolute penetration-power ceiling for ammunition selected by CP.
+  // The lower of this cap and ammoPenetrationIncrease is used. Range: 0-100.
+  "ammoPenetrationCap": 50,
+
+  // ---------------------------------------------------------------------------
+  // INDIVIDUAL COUNTERMEASURES
+  // ---------------------------------------------------------------------------
+  // true = this countermeasure is allowed.
+  // false = this countermeasure is completely disabled.
+
+  // Allows compatible night-vision equipment in response to frequent night raids.
+  "enableNightVision": true,
+
+  // Allows compatible face shields or other face protection in response to a
+  // high headshot ratio.
+  "enableFaceProtection": true,
+
+  // Allows compatible long-range optics in response to long-distance kills.
+  "enableLongRangeOptics": true,
+
+  // Allows an earpiece when the bot has an empty earpiece slot, in response to
+  // frequent suppressor usage.
+  "enableHearingProtection": true,
+
+  // Allows compatible, same-caliber ammunition upgrades in response to frequent
+  // heavy-armor usage.
+  "enableArmorPiercingAmmo": true,
+
+  // Writes detailed CP raid-analysis and bot-application information to the SPT
+  // server log. Useful for testing, but may create a lot of log output.
+  "debugLogging": false
+}

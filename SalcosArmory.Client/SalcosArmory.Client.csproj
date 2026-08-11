@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <RootNamespace>SalcosArmory.Client</RootNamespace>
+    <AssemblyName>SalcosArmory.Client</AssemblyName>
+    <Version>0.6.2</Version>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <FileVersion>0.6.2.0</FileVersion>
+    <Description>Client-side features for SALCO's ARMORY.</Description>
+    <Company>Salco</Company>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>References\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>References\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>References\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Comfort">
+      <HintPath>References\Comfort.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ItemComponent.Types">
+      <HintPath>References\ItemComponent.Types.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>References\Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>References\Sirenix.Serialization.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="spt-reflection">
+      <HintPath>References\spt-reflection.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>References\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>References\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>References\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>References\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net471" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

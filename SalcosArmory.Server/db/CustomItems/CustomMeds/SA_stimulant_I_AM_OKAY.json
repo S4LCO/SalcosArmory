@@ -1,0 +1,32 @@
+{
+  "6a70ca7e0a4a0d0f1fe00001": {
+    "itemTplToClone": "5ed5166ad380ab312177c100",
+    "parentId": "5448f3a64bdc2d60728b456a",
+    "handbookParentId": "5b47574386f77428ca22b33a",
+    "overrideProperties": {
+      "BackgroundColor": "blue",
+      "CanRequireOnRagfair": false,
+      "CanSellOnRagfair": false,
+      "ExaminedByDefault": true,
+      "medUseTime": 2,
+      "MaxHpResource": 0,
+      "Name": "salco_stimulant_i_am_okay",
+      "StimulatorBuffs": "6a70ca7e0a4a0d0f1fe00002",
+      "RarityPvE": "Superrare",
+      "effects_damage": [],
+      "effects_health": []
+    },
+    "locales": {
+      "en": {
+        "name": "SALCO's ARMORY: \"I'm Okay\" stimulant injector",
+        "shortName": "SA: I'm Okay",
+        "description": "“I’m Okay”\n\nSometimes everything becomes too much.\n\nGetting out of bed. Taking a shower. Taking out the trash. Answering a message. Being around other people.\n\nYou may feel useless, worthless, or completely alone. You may tell no one what is really going on. Instead, you bury every thought and every feeling until the only words you can still say are:\n\n“I’m okay.”\n\nIf you ever reach the point where you believe there is no way out, use this stim here — in the game.\n\nLet this raid end. Not your life.\n\nAfterwards, step away from the screen and tell someone the truth. Talk to a friend, a family member, a doctor, a therapist, or a crisis counselor.\n\nYou do not have to carry everything alone. Asking for help is not weakness.\n\nIf you are in immediate danger of hurting yourself, contact emergency services or a crisis hotline now."
+      }
+    },
+    "fleaPriceRoubles": 1,
+    "handbookPriceRoubles": 1,
+    "addtoBots": false,
+    "addtoModSlots": false,
+    "addtoStaticLootContainers": false
+  }
+}
