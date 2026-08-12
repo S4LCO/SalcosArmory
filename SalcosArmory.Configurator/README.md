@@ -26,12 +26,5 @@ SalcosArmory/configurator-backups
 Normal form edits preserve JSONC comments. Additional compatibility files and
 future config files remain available through the **Advanced JSONC** tab.
 
-## Build
-
-```powershell
-dotnet build SalcosArmory.sln -c Release
-dotnet publish SalcosArmory.Configurator/SalcosArmory.Configurator.csproj -c Release -o SalcosArmory.Configurator/publish
-```
-
 The publish output is a compressed, self-contained `win-x64` executable. Users
 do not need to install a separate .NET desktop runtime.
